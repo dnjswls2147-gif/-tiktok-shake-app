@@ -59,7 +59,7 @@
       편집하기
     </h1>
     <p class="text-xs font-bold text-sky-900/75 mt-1">
-      쫀득한 틱톡 쉐이크 · 캡컷 글리치 · 워터마크
+      초고속 쫀득한 틱톡 쉐이크 · 초대형 워터마크
     </p>
   </header>
 
@@ -76,7 +76,7 @@
         </div>
         <h2 class="text-xl font-black text-slate-800 mb-2">틱톡 에딧 쉐이크 메이커</h2>
         <p class="text-xs text-slate-600 font-medium mb-6 leading-relaxed">
-          내 갤러리 영상을 불러와서<br>쫀득한 쉐이크와 워터마크를 입혀보세요!
+          내 영상을 불러와서<br>초강력 쫀득 쉐이크와 워터마크를 입혀보세요!
         </p>
         <button id="btnGoUpload" type="button" class="btn-press w-full py-4 px-6 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-black text-xl rounded-2xl shadow-lg shadow-sky-600/30 flex items-center justify-center gap-2">
           <span>편집하기</span>
@@ -124,9 +124,9 @@
         </label>
       </div>
 
-      <!-- 캔버스 컨테이너 (원본 비율 100% 유지) -->
-      <div id="canvasBox" class="relative w-full bg-slate-950 rounded-3xl overflow-hidden shadow-2xl border-4 border-white flex items-center justify-center mx-auto" style="min-height: 240px; max-height: 46vh;">
-        <canvas id="previewCanvas" class="block max-w-full max-h-[44vh] w-auto h-auto"></canvas>
+      <!-- 캔버스 컨테이너 (원본 비율 유지 및 꽉 찬 화면) -->
+      <div id="canvasBox" class="relative w-full bg-slate-950 rounded-3xl overflow-hidden shadow-2xl border-4 border-white flex items-center justify-center mx-auto" style="min-height: 260px; max-height: 48vh;">
+        <canvas id="previewCanvas" class="block max-w-full max-h-[46vh] w-auto h-auto"></canvas>
         <button id="btnPlayPause" type="button" class="absolute inset-0 w-full h-full flex items-center justify-center bg-transparent">
           <div id="pausedBadge" class="hidden w-12 h-12 rounded-full bg-black/60 text-white flex items-center justify-center backdrop-blur-sm shadow">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
@@ -150,10 +150,10 @@
       <!-- 효과 조절 컨트롤 패널 -->
       <div class="w-full bg-white/95 backdrop-blur-md rounded-2xl p-3.5 shadow-md border border-white space-y-3">
 
-        <!-- 1. 쫀득한 쉐이크 토글 -->
+        <!-- 1. 초강력 쉐이크 토글 -->
         <div class="w-full">
           <button id="btnShakeToggle" type="button" class="btn-press w-full py-2.5 px-3 rounded-xl text-xs font-black bg-sky-500 text-white shadow-sm flex items-center justify-center gap-2">
-            <span>🔥 2배 더 쫀득한 틱톡 에딧 쉐이크:</span>
+            <span>🔥 초고속 쫀득 틱톡 쉐이크:</span>
             <span id="shakeStateText" class="text-yellow-200">ON</span>
           </button>
         </div>
@@ -162,7 +162,7 @@
 
         <!-- 2. 워터마크 설정 패널 (중앙 고정, 3배 크기 틱톡 에딧 폰트) -->
         <div class="space-y-2">
-          <span class="text-xs font-black text-slate-700">🏷️ 틱톡 에딧 워터마크 (정중앙 3배 크기)</span>
+          <span class="text-xs font-black text-slate-700">🏷️ 틱톡 에딧 워터마크 (정중앙 초대형 폰트)</span>
           <input id="inputWmText" type="text" placeholder="예: @my_edit" value="@my_edit" class="w-full py-2 px-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 outline-none focus:border-sky-500">
           
           <div class="grid grid-cols-2 gap-2 text-[11px]">
@@ -203,7 +203,7 @@
         <span>출력하기 (갤러리 저장)</span>
       </button>
 
-      <!-- 저장 완료 카드 (취소/초기화 버튼 포함) -->
+      <!-- 저장 완료 카드 -->
       <div id="exportCompleteCard" class="hidden w-full bg-white rounded-2xl p-4 shadow-lg border-2 border-emerald-400 text-center space-y-2.5 animate-pop">
         <p class="text-sm font-black text-emerald-700">✅ 쉐이크 영상 완성!</p>
         <a id="directDownloadBtn" href="#" download="tiktok_edit_shake.mp4" class="btn-press block w-full py-3 px-4 bg-emerald-500 text-white font-black text-sm rounded-xl shadow">
@@ -264,7 +264,7 @@
 
     let isShakeOn = true;
     let playbackSpeed = 1.0;
-    const baseBpm = 110; // 박자 주기를 넓혀서 쉐이크 지속 시간 연장
+    const baseBpm = 135;
     let rafId = null;
     let isExporting = false;
     let activeRecorder = null;
@@ -326,7 +326,7 @@
         switchStep(stepEditor);
         hiddenVideo.play().then(() => { hiddenVideo.muted = false; }).catch(() => {});
         startLoop();
-        showToast('준비 완료! 2배 더 쫀득한 쉐이크를 확인하세요.');
+        showToast('준비 완료! 초고속 쫀득 쉐이크가 적용되었습니다.');
       };
     }
 
@@ -363,11 +363,11 @@
         if (isShakeOn) {
           const beatSec = 60 / baseBpm;
           const prog = (t % beatSec) / beatSec;
-          const decay = Math.exp(-4.5 * prog); // 더 길어진 쉐이크 지속 시간
+          const decay = Math.exp(-5.0 * prog);
           const sign = Math.floor(t / beatSec) % 2 === 0 ? 1 : -1;
-          scale = 1.25 + 0.44 * decay; // 2배 더 쫀득하고 강한 줌인 바운스
-          dx = sign * 75 * Math.sin(prog * Math.PI * 4) * decay;
-          dy = 55 * Math.cos(prog * Math.PI * 3) * decay;
+          scale = 1.32 + 0.58 * decay; 
+          dx = sign * 110 * Math.sin(prog * Math.PI * 6) * decay;
+          dy = 85 * Math.cos(prog * Math.PI * 5) * decay;
         }
 
         bufferCtx.save();
@@ -380,17 +380,16 @@
 
         ctx.drawImage(bufferCanvas, 0, 0, w, h);
 
-        // 틱톡 에딧 스타일 정중앙 고정 3배 크기 워터마크
         const wmText = inputWmText.value.trim();
         const startT = parseFloat(inputWmStart.value) || 0;
         const endT = parseFloat(inputWmEnd.value) || 999;
         if (wmText && t >= startT && t <= endT) {
           ctx.save();
-          const fontSize = Math.round(Math.min(w, h) * 0.085 * 3); // 3배 더 커진 폰트
+          const fontSize = Math.round(Math.min(w, h) * 0.09 * 3.4);
           ctx.font = `900 ${fontSize}px "Impact", "Arial Black", sans-serif`;
-          ctx.fillStyle = 'rgba(255, 255, 255, 0.98)';
-          ctx.shadowColor = 'rgba(0, 0, 0, 0.95)';
-          ctx.shadowBlur = 12;
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.99)';
+          ctx.shadowColor = 'rgba(0, 0, 0, 0.98)';
+          ctx.shadowBlur = 16;
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.fillText(wmText, w / 2, h / 2);
@@ -448,7 +447,7 @@
 
         activeRecorder.onstop = () => {
           clearInterval(exportTimer);
-          if (!isExporting) return; // 취소된 경우
+          if (!isExporting) return;
           const blob = new Blob(chunks, { type: 'video/webm' });
           if (exportedObjectUrl) URL.revokeObjectURL(exportedObjectUrl);
           exportedObjectUrl = URL.createObjectURL(blob);
@@ -472,4 +471,4 @@
     });
   </script>
 </body>
-  </html>
+</html>
