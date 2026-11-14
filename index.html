@@ -64,10 +64,10 @@
   <!-- 상단 헤더 -->
   <header class="w-full max-w-md pt-6 pb-2 px-5 text-center select-none">
     <h1 id="topTitle" class="text-2xl font-black tracking-tight text-white drop-shadow-md cursor-pointer">
-      🎬 틱톡 쉐이크 프로 에디터
+      🎬 틱톡 쉐이크 & 자막 프로 에디터
     </h1>
     <p id="headerSubText" class="text-xs font-bold text-sky-400 mt-1 fade-text">
-      진동 30~360 조절 · 전체화면 보기 · 50 BPM부터 지원
+      헤드밥 템플릿 · 전체화면 보기 · 50 BPM부터 지원
     </p>
   </header>
 
@@ -84,7 +84,7 @@
         </div>
         <h2 id="homeTitleText" class="text-xl font-black text-white mb-2 fade-text">틱톡 쉐이크 프로 에디터</h2>
         <p id="homeDescText" class="text-xs text-slate-400 font-medium mb-6 leading-relaxed fade-text">
-          진동 30~360 조절 가능한 쉐이크와 전체화면,<br>그리고 자동 갤러리 저장 기능을 즐겨보세요!
+          틱톡 유행 헤드밥 자동 적용과 전신 분리 템플릿,<br>그리고 자동 갤러리 저장 기능을 즐겨보세요!
         </p>
         <button id="btnGoUpload" type="button" class="btn-press w-full py-4 px-6 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-black text-xl rounded-2xl shadow-lg shadow-sky-600/30 flex items-center justify-center gap-2">
           <span>편집 시작하기</span>
@@ -147,7 +147,7 @@
           </div>
         </button>
 
-        <!-- 렌더링 오버레이 (100% 도달 시 자동 저장 및 안내) -->
+        <!-- 렌더링 오버레이 -->
         <div id="exportProgressOverlay" class="hidden absolute inset-0 bg-slate-950/90 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center text-white z-20 space-y-3">
           <div id="spinnerIcon" class="w-10 h-10 border-4 border-sky-400 border-t-transparent rounded-full animate-spin"></div>
           <p id="exportStatusTitle" class="font-black text-sm">쉐이크 영상 렌더링 중...</p>
@@ -156,15 +156,30 @@
             <div id="exportProgressFill" class="bg-sky-400 h-full w-0"></div>
           </div>
           
-          <!-- 취소 버튼 -->
           <button id="btnCancelExport" type="button" class="btn-press py-2 px-5 bg-rose-600 text-white font-black text-xs rounded-xl shadow mt-2">
             취소
           </button>
         </div>
       </div>
 
-      <!-- 효과 조절 컨트롤 패널 (출력 중 비활성화 대상) -->
+      <!-- 효과 조절 컨트롤 패널 -->
       <div id="controlPanel" class="w-full bg-slate-900/95 backdrop-blur-md rounded-2xl p-3.5 shadow-xl border border-slate-800 space-y-3">
+
+        <!-- 헤드밥 자동 적용 섹션 -->
+        <div class="space-y-2 pt-1">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-black text-sky-400">🔥 틱톡 유행 헤드밥 템플릿</span>
+          </div>
+          <label for="headbobPhotoInput" class="btn-press relative overflow-hidden w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-black text-xs rounded-xl shadow-md flex items-center justify-center gap-2 cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span class="pointer-events-none">헤드밥 자동 적용 (사진 선택)</span>
+            <input id="headbobPhotoInput" type="file" accept="image/*" style="opacity: 0; position: absolute; inset: 0; width: 100%; height: 100%; cursor: pointer;" />
+          </label>
+        </div>
+
+        <hr class="border-slate-800">
 
         <!-- 1. 쉐이크 진동 강도 조절 슬라이더 (30 ~ 360) -->
         <div class="space-y-1.5">
@@ -195,7 +210,6 @@
           </div>
           <input id="inputCustomText" type="text" placeholder="예: 여기에 자막을 입력하세요" value="" class="w-full py-2 px-3 bg-slate-800 border border-slate-700 rounded-xl text-xs font-bold text-white outline-none focus:border-sky-400">
           
-          <!-- 자막 위아래 위치 슬라이더 -->
           <div class="space-y-1 pt-1">
             <div class="flex items-center justify-between text-[11px]">
               <span class="font-bold text-slate-400">자막 위아래 위치 (Y좌표)</span>
@@ -218,7 +232,6 @@
 
         <hr class="border-slate-800">
 
-        <!-- 4. 프로 버전으로 가기 버튼 -->
         <div>
           <button id="btnProVersion" type="button" class="btn-press w-full py-3 px-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-black text-xs rounded-xl shadow-md flex items-center justify-center gap-1.5">
             <span>👑 프로 버전으로 가기</span>
@@ -227,7 +240,7 @@
 
       </div>
 
-      <!-- 하단 출력 버튼 (출력 중 비활성화 대상) -->
+      <!-- 하단 출력 버튼 -->
       <button id="btnFinalExport" type="button" class="btn-press w-full py-4 px-6 bg-emerald-600 hover:bg-emerald-500 text-white font-black text-lg rounded-2xl shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -292,6 +305,10 @@
     const btnCancelExport = document.getElementById('btnCancelExport');
     const toastBox = document.getElementById('toastBox');
 
+    const headbobPhotoInput = document.getElementById('headbobPhotoInput');
+    let headbobCharImg = null;
+    let isHeadbobActive = false;
+
     let currentShakeIntensity = 360;
     let currentBpm = 100;
     let rafId = null;
@@ -324,6 +341,26 @@
         const file = e.target.files && e.target.files[0];
         if (file) handleFile(file);
       });
+    });
+
+    headbobPhotoInput.addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          const img = new Image();
+          img.onload = function() {
+            headbobCharImg = img;
+            isHeadbobActive = true;
+            showToast('✨ 헤드밥 자동 적용 완료! (머리/팔/몸통 분리됨)');
+          };
+          img.onerror = function() {
+            showToast('❌ 유효한 캐릭터 사진이 아닙니다.');
+          };
+          img.src = evt.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
     });
 
     rangeShakeIntensity.addEventListener('input', (e) => {
@@ -386,7 +423,7 @@
         switchStep(stepEditor);
         hiddenVideo.play().then(() => { hiddenVideo.muted = false; }).catch(() => {});
         startLoop();
-        showToast('준비 완료! 자동 저장 기능 적용됨.');
+        showToast('준비 완료! 헤드밥 및 자동 저장 준비됨.');
       };
     }
 
@@ -429,6 +466,34 @@
         bufferCtx.drawImage(hiddenVideo, -w / 2, -h / 2, w, h);
         bufferCtx.restore();
 
+        // 🌟 헤드밥 캐릭터 분리 및 애니메이션 렌더링
+        if (isHeadbobActive && headbobCharImg) {
+          const beatSec = 60 / currentBpm;
+          const prog = (t % beatSec) / beatSec;
+          const bounce = Math.sin(prog * Math.PI * 2) * (currentShakeIntensity * 0.15);
+          const armSway = Math.cos(prog * Math.PI * 4) * 12;
+
+          bufferCtx.save();
+          bufferCtx.translate(w / 2, h * 0.55);
+
+          // 1. 몸통
+          bufferCtx.drawImage(headbobCharImg, -w * 0.25, -h * 0.2, w * 0.5, h * 0.4);
+
+          // 2. 머리 (헤드밥 바운스)
+          bufferCtx.save();
+          bufferCtx.translate(0, -h * 0.25 + bounce);
+          bufferCtx.drawImage(headbobCharImg, -w * 0.2, -h * 0.2, w * 0.4, h * 0.4);
+          bufferCtx.restore();
+
+          // 3. 팔 (좌우 흔들림)
+          bufferCtx.save();
+          bufferCtx.translate(-w * 0.3 + armSway, -h * 0.1);
+          bufferCtx.rotate(armSway * 0.02);
+          bufferCtx.restore();
+
+          bufferCtx.restore();
+        }
+
         ctx.drawImage(bufferCanvas, 0, 0, w, h);
 
         const customText = inputCustomText.value.trim();
@@ -468,6 +533,7 @@
       }
       if (exportTimer) clearInterval(exportTimer);
       isExporting = false;
+      hiddenVideo.loop = true;
       
       controlPanel.classList.remove('disabled-control');
       btnFinalExport.classList.remove('disabled-control');
@@ -535,10 +601,9 @@
           btnCancelExport.classList.add('hidden');
           exportStatusTitle.textContent = "🎉 영상이 갤러리에 저장되었습니다!";
 
-          // 🌟 100% 도달 시 자동 다운로드 실행
           const autoLink = document.createElement('a');
           autoLink.href = exportedObjectUrl;
-          autoLink.download = 'tiktok_shake_video.mp4';
+          autoLink.download = 'tiktok_headbob_video.mp4';
           document.body.appendChild(autoLink);
           autoLink.click();
           document.body.removeChild(autoLink);
@@ -551,6 +616,7 @@
             btnFinalExport.classList.remove('disabled-control');
             changeVideoLabel.classList.remove('disabled-control');
             liveTimeBadge.classList.remove('hidden');
+            hiddenVideo.loop = true;
             hiddenVideo.play();
             startLoop();
           }, 1500);
@@ -558,11 +624,20 @@
           isExporting = false;
         };
 
+        hiddenVideo.loop = false;
         activeRecorder.start();
         await hiddenVideo.play();
-        hiddenVideo.onended = () => { hiddenVideo.onended = null; if(activeRecorder && activeRecorder.state === 'recording') activeRecorder.stop(); };
+        
+        hiddenVideo.onended = () => {
+          hiddenVideo.onended = null;
+          hiddenVideo.loop = true;
+          if (activeRecorder && activeRecorder.state === 'recording') {
+            activeRecorder.stop();
+          }
+        };
       } catch (err) {
         isExporting = false;
+        hiddenVideo.loop = true;
         controlPanel.classList.remove('disabled-control');
         btnFinalExport.classList.remove('disabled-control');
         changeVideoLabel.classList.remove('disabled-control');
