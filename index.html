@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>틱톡 & 캡컷 스타일 영상 쉐이크 편집기</title>
+  <title>틱톡 & 캡컷 스타일 영상 쉐이크 & 왜곡 편집기</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;800;900&display=swap" rel="stylesheet">
   <style>
@@ -59,7 +59,7 @@
       편집하기
     </h1>
     <p class="text-xs font-bold text-sky-900/75 mt-1">
-      초고속 쫀득한 틱톡 쉐이크 · 초대형 워터마크
+      진동 90 · 화면 1.1배 · 캡컷 왜곡 효과 적용
     </p>
   </header>
 
@@ -74,9 +74,9 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
           </svg>
         </div>
-        <h2 class="text-xl font-black text-slate-800 mb-2">틱톡 에딧 쉐이크 메이커</h2>
+        <h2 class="text-xl font-black text-slate-800 mb-2">틱톡 캡컷 왜곡 & 쉐이크 에디터</h2>
         <p class="text-xs text-slate-600 font-medium mb-6 leading-relaxed">
-          내 영상을 불러와서<br>초강력 쫀득 쉐이크와 워터마크를 입혀보세요!
+          워터마크 없는 깔끔한 화면과<br>강렬한 캡컷 왜곡 쉐이크를 적용해보세요!
         </p>
         <button id="btnGoUpload" type="button" class="btn-press w-full py-4 px-6 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-black text-xl rounded-2xl shadow-lg shadow-sky-600/30 flex items-center justify-center gap-2">
           <span>편집하기</span>
@@ -124,7 +124,7 @@
         </label>
       </div>
 
-      <!-- 캔버스 컨테이너 (원본 비율 유지 및 꽉 찬 화면) -->
+      <!-- 캔버스 컨테이너 -->
       <div id="canvasBox" class="relative w-full bg-slate-950 rounded-3xl overflow-hidden shadow-2xl border-4 border-white flex items-center justify-center mx-auto" style="min-height: 260px; max-height: 48vh;">
         <canvas id="previewCanvas" class="block max-w-full max-h-[46vh] w-auto h-auto"></canvas>
         <button id="btnPlayPause" type="button" class="absolute inset-0 w-full h-full flex items-center justify-center bg-transparent">
@@ -133,10 +133,10 @@
           </div>
         </button>
 
-        <!-- 렌더링 오버레이 (취소 버튼 포함) -->
+        <!-- 렌더링 오버레이 -->
         <div id="exportProgressOverlay" class="hidden absolute inset-0 bg-slate-900/90 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center text-white z-20 space-y-3">
           <div class="w-10 h-10 border-4 border-sky-400 border-t-transparent rounded-full animate-spin"></div>
-          <p class="font-black text-sm">쉐이크 영상 렌더링 중...</p>
+          <p class="font-black text-sm">왜곡 쉐이크 영상 렌더링 중...</p>
           <p id="exportPercentText" class="text-xs text-sky-300 font-extrabold">0% 완료</p>
           <div class="w-full max-w-[200px] bg-slate-700 rounded-full h-2 overflow-hidden">
             <div id="exportProgressFill" class="bg-sky-400 h-full w-0"></div>
@@ -150,39 +150,24 @@
       <!-- 효과 조절 컨트롤 패널 -->
       <div class="w-full bg-white/95 backdrop-blur-md rounded-2xl p-3.5 shadow-md border border-white space-y-3">
 
-        <!-- 1. 초강력 쉐이크 토글 -->
-        <div class="w-full">
-          <button id="btnShakeToggle" type="button" class="btn-press w-full py-2.5 px-3 rounded-xl text-xs font-black bg-sky-500 text-white shadow-sm flex items-center justify-center gap-2">
-            <span>🔥 초고속 쫀득 틱톡 쉐이크:</span>
+        <!-- 1. 진동 90 & 1.1배 크기 쫀득 쉐이크 토글 -->
+        <div class="w-full grid grid-cols-2 gap-2">
+          <button id="btnShakeToggle" type="button" class="btn-press py-2.5 px-3 rounded-xl text-xs font-black bg-sky-500 text-white shadow-sm flex items-center justify-center gap-1">
+            <span>🔥 진동90 쉐이크:</span>
             <span id="shakeStateText" class="text-yellow-200">ON</span>
+          </button>
+          <button id="btnDistortionToggle" type="button" class="btn-press py-2.5 px-3 rounded-xl text-xs font-black bg-purple-600 text-white shadow-sm flex items-center justify-center gap-1">
+            <span>✨ 캡컷 왜곡:</span>
+            <span id="distortionStateText" class="text-yellow-200">ON</span>
           </button>
         </div>
 
         <hr class="border-slate-200">
 
-        <!-- 2. 워터마크 설정 패널 (중앙 고정, 3배 크기 틱톡 에딧 폰트) -->
-        <div class="space-y-2">
-          <span class="text-xs font-black text-slate-700">🏷️ 틱톡 에딧 워터마크 (정중앙 초대형 폰트)</span>
-          <input id="inputWmText" type="text" placeholder="예: @my_edit" value="@my_edit" class="w-full py-2 px-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 outline-none focus:border-sky-500">
-          
-          <div class="grid grid-cols-2 gap-2 text-[11px]">
-            <div class="flex items-center justify-between bg-slate-50 px-2.5 py-1.5 rounded-xl border border-slate-200">
-              <span class="font-bold text-slate-500">시작(초)</span>
-              <input id="inputWmStart" type="number" step="0.5" min="0" value="0" class="w-12 text-right font-black text-sky-600 bg-transparent outline-none">
-            </div>
-            <div class="flex items-center justify-between bg-slate-50 px-2.5 py-1.5 rounded-xl border border-slate-200">
-              <span class="font-bold text-slate-500">끝(초)</span>
-              <input id="inputWmEnd" type="number" step="0.5" min="0.5" value="99" class="w-12 text-right font-black text-sky-600 bg-transparent outline-none">
-            </div>
-          </div>
-        </div>
-
-        <hr class="border-slate-200">
-
-        <!-- 3. 배속 조절 -->
+        <!-- 2. 배속 조절 -->
         <div>
           <div class="flex items-center justify-between mb-1">
-            <span class="text-xs font-black text-slate-700">⏩ 영상 배속</span>
+            <span class="text-xs font-black text-slate-700">⏩ 쫀득 쉐이크 속도 배속</span>
             <span id="speedValueText" class="text-xs font-extrabold text-sky-600">1.0x 기본</span>
           </div>
           <div class="grid grid-cols-4 gap-1">
@@ -205,8 +190,8 @@
 
       <!-- 저장 완료 카드 -->
       <div id="exportCompleteCard" class="hidden w-full bg-white rounded-2xl p-4 shadow-lg border-2 border-emerald-400 text-center space-y-2.5 animate-pop">
-        <p class="text-sm font-black text-emerald-700">✅ 쉐이크 영상 완성!</p>
-        <a id="directDownloadBtn" href="#" download="tiktok_edit_shake.mp4" class="btn-press block w-full py-3 px-4 bg-emerald-500 text-white font-black text-sm rounded-xl shadow">
+        <p class="text-sm font-black text-emerald-700">✅ 왜곡 쉐이크 영상 완성!</p>
+        <a id="directDownloadBtn" href="#" download="tiktok_distortion_shake.mp4" class="btn-press block w-full py-3 px-4 bg-emerald-500 text-white font-black text-sm rounded-xl shadow">
           📥 갤러리 저장 (다운로드 및 공유)
         </a>
         <button id="btnCancelExportDone" type="button" class="btn-press w-full py-2.5 px-4 bg-slate-200 text-slate-700 font-bold text-xs rounded-xl">
@@ -244,10 +229,8 @@
 
     const btnShakeToggle = document.getElementById('btnShakeToggle');
     const shakeStateText = document.getElementById('shakeStateText');
-
-    const inputWmText = document.getElementById('inputWmText');
-    const inputWmStart = document.getElementById('inputWmStart');
-    const inputWmEnd = document.getElementById('inputWmEnd');
+    const btnDistortionToggle = document.getElementById('btnDistortionToggle');
+    const distortionStateText = document.getElementById('distortionStateText');
 
     const speedBtns = document.querySelectorAll('.speed-btn');
     const speedValueText = document.getElementById('speedValueText');
@@ -263,8 +246,9 @@
     const toastBox = document.getElementById('toastBox');
 
     let isShakeOn = true;
+    let isDistortionOn = true;
     let playbackSpeed = 1.0;
-    const baseBpm = 135;
+    const baseBpm = 125;
     let rafId = null;
     let isExporting = false;
     let activeRecorder = null;
@@ -326,7 +310,7 @@
         switchStep(stepEditor);
         hiddenVideo.play().then(() => { hiddenVideo.muted = false; }).catch(() => {});
         startLoop();
-        showToast('준비 완료! 초고속 쫀득 쉐이크가 적용되었습니다.');
+        showToast('준비 완료! 진동 90 & 왜곡 효과가 적용되었습니다.');
       };
     }
 
@@ -334,8 +318,16 @@
       isShakeOn = !isShakeOn;
       shakeStateText.textContent = isShakeOn ? 'ON' : 'OFF';
       btnShakeToggle.className = isShakeOn ? 
-        'btn-press w-full py-2.5 px-3 rounded-xl text-xs font-black bg-sky-500 text-white shadow-sm flex items-center justify-center gap-2' :
-        'btn-press w-full py-2.5 px-3 rounded-xl text-xs font-black bg-slate-100 text-slate-700 border border-slate-200 flex items-center justify-center gap-2';
+        'btn-press py-2.5 px-3 rounded-xl text-xs font-black bg-sky-500 text-white shadow-sm flex items-center justify-center gap-1' :
+        'btn-press py-2.5 px-3 rounded-xl text-xs font-black bg-slate-100 text-slate-700 border border-slate-200 flex items-center justify-center gap-1';
+    });
+
+    btnDistortionToggle.addEventListener('click', () => {
+      isDistortionOn = !isDistortionOn;
+      distortionStateText.textContent = isDistortionOn ? 'ON' : 'OFF';
+      btnDistortionToggle.className = isDistortionOn ? 
+        'btn-press py-2.5 px-3 rounded-xl text-xs font-black bg-purple-600 text-white shadow-sm flex items-center justify-center gap-1' :
+        'btn-press py-2.5 px-3 rounded-xl text-xs font-black bg-slate-100 text-slate-700 border border-slate-200 flex items-center justify-center gap-1';
     });
 
     speedBtns.forEach(btn => {
@@ -358,43 +350,48 @@
       const h = previewCanvas.height;
       if (hiddenVideo.readyState >= 2 && w > 0 && h > 0) {
         const t = hiddenVideo.currentTime;
-        let scale = 1.0, dx = 0, dy = 0;
+        let scale = 1.1; // 화면 크기 110% (1.1배)
+        let dx = 0, dy = 0, rot = 0;
 
         if (isShakeOn) {
           const beatSec = 60 / baseBpm;
           const prog = (t % beatSec) / beatSec;
-          const decay = Math.exp(-5.0 * prog);
+          const decay = Math.exp(-4.2 * prog);
           const sign = Math.floor(t / beatSec) % 2 === 0 ? 1 : -1;
-          scale = 1.32 + 0.58 * decay; 
-          dx = sign * 110 * Math.sin(prog * Math.PI * 6) * decay;
-          dy = 85 * Math.cos(prog * Math.PI * 5) * decay;
+          
+          scale = 1.1 + 0.35 * decay; 
+          dx = sign * 90 * Math.sin(prog * Math.PI * 6) * decay; // 진동 90
+          dy = 70 * Math.cos(prog * Math.PI * 5) * decay;
+          
+          if (isDistortionOn) {
+            rot = sign * 0.04 * Math.sin(prog * Math.PI * 4) * decay;
+          }
         }
 
         bufferCtx.save();
         bufferCtx.fillStyle = '#000';
         bufferCtx.fillRect(0, 0, w, h);
+        
         bufferCtx.translate(w / 2 + dx, h / 2 + dy);
+        if (rot !== 0) bufferCtx.rotate(rot);
         bufferCtx.scale(scale, scale);
+        
         bufferCtx.drawImage(hiddenVideo, -w / 2, -h / 2, w, h);
         bufferCtx.restore();
 
-        ctx.drawImage(bufferCanvas, 0, 0, w, h);
-
-        const wmText = inputWmText.value.trim();
-        const startT = parseFloat(inputWmStart.value) || 0;
-        const endT = parseFloat(inputWmEnd.value) || 999;
-        if (wmText && t >= startT && t <= endT) {
-          ctx.save();
-          const fontSize = Math.round(Math.min(w, h) * 0.09 * 3.4);
-          ctx.font = `900 ${fontSize}px "Impact", "Arial Black", sans-serif`;
-          ctx.fillStyle = 'rgba(255, 255, 255, 0.99)';
-          ctx.shadowColor = 'rgba(0, 0, 0, 0.98)';
-          ctx.shadowBlur = 16;
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillText(wmText, w / 2, h / 2);
-          ctx.restore();
+        if (isDistortionOn && isShakeOn) {
+          const beatSec = 60 / baseBpm;
+          const prog = (t % beatSec) / beatSec;
+          const decay = Math.exp(-5 * prog);
+          if (decay > 0.3) {
+            ctx.save();
+            ctx.globalAlpha = 0.25;
+            ctx.drawImage(bufferCanvas, (Math.random() - 0.5) * 12, (Math.random() - 0.5) * 8);
+            ctx.restore();
+          }
         }
+
+        ctx.drawImage(bufferCanvas, 0, 0, w, h);
       }
       rafId = requestAnimationFrame(drawFrame);
     }
@@ -457,7 +454,7 @@
           exportProgressOverlay.classList.add('hidden');
           exportCompleteCard.classList.remove('hidden');
           hiddenVideo.play();
-          showToast('✅ 쉐이크 영상 출력 완료!');
+          showToast('✅ 왜곡 쉐이크 영상 출력 완료!');
         };
 
         activeRecorder.start();
