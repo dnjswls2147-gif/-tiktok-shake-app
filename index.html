@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>틱톡 & 캡컷 스타일 영상 쉐이크 & 왜곡 편집기</title>
+  <title>틱톡 캡컷 찐 왜곡 & 쉐이크 편집기</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;800;900&display=swap" rel="stylesheet">
   <style>
@@ -13,28 +13,10 @@
       box-sizing: border-box;
     }
     body {
-      background: linear-gradient(160deg, #7DD3FC 0%, #BAE6FD 55%, #E0F2FE 100%);
+      background: linear-gradient(160deg, #0F172A 0%, #1E293B 55%, #090D16 100%);
       min-height: 100vh;
       margin: 0;
-    }
-    input[type="range"] {
-      -webkit-appearance: none;
-      appearance: none;
-      height: 6px;
-      background: #E2E8F0;
-      border-radius: 999px;
-      outline: none;
-    }
-    input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: #0284C7;
-      cursor: pointer;
-      border: 3px solid #FFFFFF;
-      box-shadow: 0 2px 6px rgba(2, 132, 199, 0.45);
+      color: #F8FAFC;
     }
     .btn-press {
       transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.15s ease;
@@ -51,15 +33,15 @@
     }
   </style>
 </head>
-<body class="text-slate-800 flex flex-col items-center justify-between pb-10">
+<body class="flex flex-col items-center justify-between pb-10">
 
   <!-- 상단 헤더 -->
   <header class="w-full max-w-md pt-6 pb-2 px-5 text-center select-none">
-    <h1 id="topTitle" class="text-3xl font-black tracking-tight text-slate-900 drop-shadow-sm cursor-pointer">
-      편집하기
+    <h1 id="topTitle" class="text-2xl font-black tracking-tight text-white drop-shadow-md cursor-pointer">
+      ⚡ 캡컷 왜곡 & 진동90 쉐이크
     </h1>
-    <p class="text-xs font-bold text-sky-900/75 mt-1">
-      진동 90 · 화면 1.1배 · 캡컷 왜곡 효과 적용
+    <p class="text-xs font-bold text-sky-400 mt-1">
+      레퍼런스 영상 완벽 동기화 · 렌즈 왜곡 & RGB 글리치
     </p>
   </header>
 
@@ -68,18 +50,19 @@
 
     <!-- 1단계: 홈 화면 -->
     <section id="stepHome" class="w-full flex flex-col items-center justify-center my-auto py-8 animate-pop">
-      <div class="bg-white/80 backdrop-blur-md border-2 border-white rounded-3xl p-7 w-full flex flex-col items-center shadow-xl text-center">
-        <div class="w-20 h-20 rounded-3xl bg-gradient-to-tr from-sky-400 to-blue-600 text-white flex items-center justify-center shadow-lg shadow-sky-500/30 mb-5">
+      <div class="bg-slate-900/90 backdrop-blur-md border border-slate-700 rounded-3xl p-7 w-full flex flex-col items-center shadow-2xl text-center">
+        <div class="w-20 h-20 rounded-3xl bg-gradient-to-tr from-purple-600 to-sky-500 text-white flex items-center justify-center shadow-lg shadow-purple-500/30 mb-5">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.3">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
-        <h2 class="text-xl font-black text-slate-800 mb-2">틱톡 캡컷 왜곡 & 쉐이크 에디터</h2>
-        <p class="text-xs text-slate-600 font-medium mb-6 leading-relaxed">
-          워터마크 없는 깔끔한 화면과<br>강렬한 캡컷 왜곡 쉐이크를 적용해보세요!
+        <h2 class="text-xl font-black text-white mb-2">틱톡 캡컷 쉐이크 메이커</h2>
+        <p class="text-xs text-slate-400 font-medium mb-6 leading-relaxed">
+          영상을 업로드하면 캡컷 레퍼런스처럼<br>진동 90 타이트한 쉐이크와 왜곡이 작렬합니다!
         </p>
-        <button id="btnGoUpload" type="button" class="btn-press w-full py-4 px-6 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-black text-xl rounded-2xl shadow-lg shadow-sky-600/30 flex items-center justify-center gap-2">
-          <span>편집하기</span>
+        <button id="btnGoUpload" type="button" class="btn-press w-full py-4 px-6 bg-gradient-to-r from-purple-600 to-sky-500 text-white font-black text-xl rounded-2xl shadow-lg shadow-purple-600/30 flex items-center justify-center gap-2">
+          <span>편집 시작하기</span>
           <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
@@ -89,17 +72,17 @@
 
     <!-- 2단계: 영상 업로드 화면 -->
     <section id="stepUpload" class="hidden w-full flex flex-col items-center justify-center my-auto py-8 animate-pop">
-      <div class="bg-white/90 backdrop-blur-md border-2 border-dashed border-sky-400 rounded-3xl p-7 w-full flex flex-col items-center shadow-xl text-center">
-        <div class="w-20 h-20 rounded-full bg-sky-100 text-sky-600 flex items-center justify-center mb-5">
+      <div class="bg-slate-900/90 backdrop-blur-md border border-dashed border-purple-500 rounded-3xl p-7 w-full flex flex-col items-center shadow-2xl text-center">
+        <div class="w-20 h-20 rounded-full bg-purple-950 text-purple-400 flex items-center justify-center mb-5">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
           </svg>
         </div>
-        <h2 class="text-xl font-black text-slate-800 mb-2">갤러리에서 영상 선택</h2>
-        <p class="text-xs text-slate-500 font-medium mb-6">
-          아래 <strong class="text-sky-600">영상 올리기</strong> 버튼을 터치하세요.
+        <h2 class="text-xl font-black text-white mb-2">갤러리에서 영상 선택</h2>
+        <p class="text-xs text-slate-400 font-medium mb-6">
+          아래 <strong class="text-purple-400">영상 올리기</strong> 버튼을 터치하세요.
         </p>
-        <label for="nativeVideoInput" class="btn-press relative overflow-hidden w-full py-4 px-6 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-black text-lg rounded-2xl shadow-lg shadow-sky-500/35 flex items-center justify-center gap-2.5 cursor-pointer">
+        <label for="nativeVideoInput" class="btn-press relative overflow-hidden w-full py-4 px-6 bg-gradient-to-r from-purple-600 to-sky-500 text-white font-black text-lg rounded-2xl shadow-lg shadow-purple-600/35 flex items-center justify-center gap-2.5 cursor-pointer">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
           </svg>
@@ -113,75 +96,75 @@
     <section id="stepEditor" class="hidden w-full flex flex-col items-center space-y-3 animate-pop">
 
       <!-- 상단바 -->
-      <div class="w-full flex items-center justify-between bg-white/90 backdrop-blur-sm px-4 py-2 rounded-2xl shadow-sm">
+      <div class="w-full flex items-center justify-between bg-slate-900/90 backdrop-blur-sm px-4 py-2.5 rounded-2xl border border-slate-800 shadow-sm">
         <div class="flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-sky-500 animate-ping"></span>
-          <span class="text-xs font-black text-sky-700">실시간 에디터 작동중</span>
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+          <span class="text-xs font-black text-emerald-400">실시간 에디터 작동중</span>
         </div>
-        <label for="changeVideoInput" class="relative overflow-hidden text-xs font-extrabold text-sky-600 underline cursor-pointer py-1 px-2">
+        <label for="changeVideoInput" class="relative overflow-hidden text-xs font-extrabold text-sky-400 underline cursor-pointer py-1 px-2">
           <span>다른 영상 올리기</span>
           <input id="changeVideoInput" type="file" accept="video/*" style="opacity: 0; position: absolute; inset: 0; width: 100%; height: 100%; cursor: pointer;" />
         </label>
       </div>
 
       <!-- 캔버스 컨테이너 -->
-      <div id="canvasBox" class="relative w-full bg-slate-950 rounded-3xl overflow-hidden shadow-2xl border-4 border-white flex items-center justify-center mx-auto" style="min-height: 260px; max-height: 48vh;">
+      <div id="canvasBox" class="relative w-full bg-black rounded-3xl overflow-hidden shadow-2xl border-4 border-slate-800 flex items-center justify-center mx-auto" style="min-height: 260px; max-height: 48vh;">
         <canvas id="previewCanvas" class="block max-w-full max-h-[46vh] w-auto h-auto"></canvas>
         <button id="btnPlayPause" type="button" class="absolute inset-0 w-full h-full flex items-center justify-center bg-transparent">
-          <div id="pausedBadge" class="hidden w-12 h-12 rounded-full bg-black/60 text-white flex items-center justify-center backdrop-blur-sm shadow">
+          <div id="pausedBadge" class="hidden w-12 h-12 rounded-full bg-black/70 text-white flex items-center justify-center backdrop-blur-sm shadow">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
           </div>
         </button>
 
         <!-- 렌더링 오버레이 -->
-        <div id="exportProgressOverlay" class="hidden absolute inset-0 bg-slate-900/90 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center text-white z-20 space-y-3">
-          <div class="w-10 h-10 border-4 border-sky-400 border-t-transparent rounded-full animate-spin"></div>
+        <div id="exportProgressOverlay" class="hidden absolute inset-0 bg-slate-950/90 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center text-white z-20 space-y-3">
+          <div class="w-10 h-10 border-4 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
           <p class="font-black text-sm">왜곡 쉐이크 영상 렌더링 중...</p>
-          <p id="exportPercentText" class="text-xs text-sky-300 font-extrabold">0% 완료</p>
-          <div class="w-full max-w-[200px] bg-slate-700 rounded-full h-2 overflow-hidden">
-            <div id="exportProgressFill" class="bg-sky-400 h-full w-0"></div>
+          <p id="exportPercentText" class="text-xs text-purple-300 font-extrabold">0% 완료</p>
+          <div class="w-full max-w-[200px] bg-slate-800 rounded-full h-2 overflow-hidden">
+            <div id="exportProgressFill" class="bg-purple-500 h-full w-0"></div>
           </div>
-          <button id="btnCancelExport" type="button" class="btn-press py-2 px-5 bg-rose-500 text-white font-black text-xs rounded-xl shadow mt-2">
+          <button id="btnCancelExport" type="button" class="btn-press py-2 px-5 bg-rose-600 text-white font-black text-xs rounded-xl shadow mt-2">
             출력 취소하기
           </button>
         </div>
       </div>
 
       <!-- 효과 조절 컨트롤 패널 -->
-      <div class="w-full bg-white/95 backdrop-blur-md rounded-2xl p-3.5 shadow-md border border-white space-y-3">
+      <div class="w-full bg-slate-900/95 backdrop-blur-md rounded-2xl p-3.5 shadow-xl border border-slate-800 space-y-3">
 
-        <!-- 1. 진동 90 & 1.1배 크기 쫀득 쉐이크 토글 -->
+        <!-- 토글 버튼들 (진동 90 & 캡컷 왜곡) -->
         <div class="w-full grid grid-cols-2 gap-2">
-          <button id="btnShakeToggle" type="button" class="btn-press py-2.5 px-3 rounded-xl text-xs font-black bg-sky-500 text-white shadow-sm flex items-center justify-center gap-1">
+          <button id="btnShakeToggle" type="button" class="btn-press py-2.5 px-3 rounded-xl text-xs font-black bg-sky-600 text-white shadow-sm flex items-center justify-center gap-1">
             <span>🔥 진동90 쉐이크:</span>
-            <span id="shakeStateText" class="text-yellow-200">ON</span>
+            <span id="shakeStateText" class="text-yellow-300">ON</span>
           </button>
           <button id="btnDistortionToggle" type="button" class="btn-press py-2.5 px-3 rounded-xl text-xs font-black bg-purple-600 text-white shadow-sm flex items-center justify-center gap-1">
             <span>✨ 캡컷 왜곡:</span>
-            <span id="distortionStateText" class="text-yellow-200">ON</span>
+            <span id="distortionStateText" class="text-yellow-300">ON</span>
           </button>
         </div>
 
-        <hr class="border-slate-200">
+        <hr class="border-slate-800">
 
-        <!-- 2. 배속 조절 -->
+        <!-- 쫀득 쉐이크 속도 배속 -->
         <div>
           <div class="flex items-center justify-between mb-1">
-            <span class="text-xs font-black text-slate-700">⏩ 쫀득 쉐이크 속도 배속</span>
-            <span id="speedValueText" class="text-xs font-extrabold text-sky-600">1.0x 기본</span>
+            <span class="text-xs font-black text-slate-300">⏩ 쫀득 쉐이크 속도 배속</span>
+            <span id="speedValueText" class="text-xs font-extrabold text-sky-400">1.0x 기본</span>
           </div>
           <div class="grid grid-cols-4 gap-1">
-            <button type="button" data-speed="0.5" class="speed-btn py-1.5 rounded-lg text-[10px] font-bold bg-slate-100 text-slate-700">0.5x 느리게</button>
-            <button type="button" data-speed="1.0" class="speed-btn py-1.5 rounded-lg text-[10px] font-extrabold bg-sky-500 text-white">1.0x 기본</button>
-            <button type="button" data-speed="1.5" class="speed-btn py-1.5 rounded-lg text-[10px] font-bold bg-slate-100 text-slate-700">1.5x 빠르게</button>
-            <button type="button" data-speed="2.0" class="speed-btn py-1.5 rounded-lg text-[10px] font-bold bg-slate-100 text-slate-700">2.0x 초고속</button>
+            <button type="button" data-speed="0.5" class="speed-btn py-1.5 rounded-lg text-[10px] font-bold bg-slate-800 text-slate-300">0.5x 느리게</button>
+            <button type="button" data-speed="1.0" class="speed-btn py-1.5 rounded-lg text-[10px] font-extrabold bg-sky-600 text-white">1.0x 기본</button>
+            <button type="button" data-speed="1.5" class="speed-btn py-1.5 rounded-lg text-[10px] font-bold bg-slate-800 text-slate-300">1.5x 빠르게</button>
+            <button type="button" data-speed="2.0" class="speed-btn py-1.5 rounded-lg text-[10px] font-bold bg-slate-800 text-slate-300">2.0x 초고속</button>
           </div>
         </div>
 
       </div>
 
       <!-- 하단 출력 버튼 -->
-      <button id="btnFinalExport" type="button" class="btn-press w-full py-4 px-6 bg-emerald-500 hover:bg-emerald-600 text-white font-black text-lg rounded-2xl shadow-lg shadow-emerald-500/30 flex items-center justify-center gap-2">
+      <button id="btnFinalExport" type="button" class="btn-press w-full py-4 px-6 bg-emerald-600 hover:bg-emerald-500 text-white font-black text-lg rounded-2xl shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
         </svg>
@@ -189,12 +172,12 @@
       </button>
 
       <!-- 저장 완료 카드 -->
-      <div id="exportCompleteCard" class="hidden w-full bg-white rounded-2xl p-4 shadow-lg border-2 border-emerald-400 text-center space-y-2.5 animate-pop">
-        <p class="text-sm font-black text-emerald-700">✅ 왜곡 쉐이크 영상 완성!</p>
-        <a id="directDownloadBtn" href="#" download="tiktok_distortion_shake.mp4" class="btn-press block w-full py-3 px-4 bg-emerald-500 text-white font-black text-sm rounded-xl shadow">
+      <div id="exportCompleteCard" class="hidden w-full bg-slate-900 rounded-2xl p-4 shadow-xl border-2 border-emerald-500 text-center space-y-2.5 animate-pop">
+        <p class="text-sm font-black text-emerald-400">✅ 캡컷 왜곡 쉐이크 영상 완성!</p>
+        <a id="directDownloadBtn" href="#" download="tiktok_distortion_shake.mp4" class="btn-press block w-full py-3 px-4 bg-emerald-600 text-white font-black text-sm rounded-xl shadow">
           📥 갤러리 저장 (다운로드 및 공유)
         </a>
-        <button id="btnCancelExportDone" type="button" class="btn-press w-full py-2.5 px-4 bg-slate-200 text-slate-700 font-bold text-xs rounded-xl">
+        <button id="btnCancelExportDone" type="button" class="btn-press w-full py-2.5 px-4 bg-slate-800 text-slate-300 font-bold text-xs rounded-xl">
           취소 / 다시 편집하기
         </button>
       </div>
@@ -202,7 +185,7 @@
     </section>
   </main>
 
-  <div id="toastBox" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900/95 text-white text-xs font-bold px-5 py-3 rounded-full shadow-2xl opacity-0 pointer-events-none transition-opacity duration-200 z-50">
+  <div id="toastBox" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-950 text-white text-xs font-bold px-5 py-3 rounded-full shadow-2xl opacity-0 pointer-events-none transition-opacity duration-200 z-50 border border-slate-800">
     알림
   </div>
 
@@ -248,7 +231,7 @@
     let isShakeOn = true;
     let isDistortionOn = true;
     let playbackSpeed = 1.0;
-    const baseBpm = 125;
+    const baseBpm = 140; // 레퍼런스 영상과 일치하는 빠른 박자 주기
     let rafId = null;
     let isExporting = false;
     let activeRecorder = null;
@@ -310,7 +293,7 @@
         switchStep(stepEditor);
         hiddenVideo.play().then(() => { hiddenVideo.muted = false; }).catch(() => {});
         startLoop();
-        showToast('준비 완료! 진동 90 & 왜곡 효과가 적용되었습니다.');
+        showToast('준비 완료! 캡컷 왜곡 & 진동90 쉐이크 적용됨.');
       };
     }
 
@@ -318,8 +301,8 @@
       isShakeOn = !isShakeOn;
       shakeStateText.textContent = isShakeOn ? 'ON' : 'OFF';
       btnShakeToggle.className = isShakeOn ? 
-        'btn-press py-2.5 px-3 rounded-xl text-xs font-black bg-sky-500 text-white shadow-sm flex items-center justify-center gap-1' :
-        'btn-press py-2.5 px-3 rounded-xl text-xs font-black bg-slate-100 text-slate-700 border border-slate-200 flex items-center justify-center gap-1';
+        'btn-press py-2.5 px-3 rounded-xl text-xs font-black bg-sky-600 text-white shadow-sm flex items-center justify-center gap-1' :
+        'btn-press py-2.5 px-3 rounded-xl text-xs font-black bg-slate-800 text-slate-400 border border-slate-700 flex items-center justify-center gap-1';
     });
 
     btnDistortionToggle.addEventListener('click', () => {
@@ -327,13 +310,13 @@
       distortionStateText.textContent = isDistortionOn ? 'ON' : 'OFF';
       btnDistortionToggle.className = isDistortionOn ? 
         'btn-press py-2.5 px-3 rounded-xl text-xs font-black bg-purple-600 text-white shadow-sm flex items-center justify-center gap-1' :
-        'btn-press py-2.5 px-3 rounded-xl text-xs font-black bg-slate-100 text-slate-700 border border-slate-200 flex items-center justify-center gap-1';
+        'btn-press py-2.5 px-3 rounded-xl text-xs font-black bg-slate-800 text-slate-400 border border-slate-700 flex items-center justify-center gap-1';
     });
 
     speedBtns.forEach(btn => {
       btn.addEventListener('click', () => {
-        speedBtns.forEach(b => b.className = 'speed-btn py-1.5 rounded-lg text-[10px] font-bold bg-slate-100 text-slate-700');
-        btn.className = 'speed-btn py-1.5 rounded-lg text-[10px] font-extrabold bg-sky-500 text-white';
+        speedBtns.forEach(b => b.className = 'speed-btn py-1.5 rounded-lg text-[10px] font-bold bg-slate-800 text-slate-300');
+        btn.className = 'speed-btn py-1.5 rounded-lg text-[10px] font-extrabold bg-sky-600 text-white';
         playbackSpeed = parseFloat(btn.dataset.speed);
         hiddenVideo.playbackRate = playbackSpeed;
         speedValueText.textContent = `${playbackSpeed.toFixed(1)}x 배속`;
@@ -356,15 +339,15 @@
         if (isShakeOn) {
           const beatSec = 60 / baseBpm;
           const prog = (t % beatSec) / beatSec;
-          const decay = Math.exp(-4.2 * prog);
+          const decay = Math.exp(-4.5 * prog);
           const sign = Math.floor(t / beatSec) % 2 === 0 ? 1 : -1;
           
-          scale = 1.1 + 0.35 * decay; 
+          scale = 1.1 + 0.42 * decay; 
           dx = sign * 90 * Math.sin(prog * Math.PI * 6) * decay; // 진동 90
-          dy = 70 * Math.cos(prog * Math.PI * 5) * decay;
+          dy = 75 * Math.cos(prog * Math.PI * 5) * decay;
           
           if (isDistortionOn) {
-            rot = sign * 0.04 * Math.sin(prog * Math.PI * 4) * decay;
+            rot = sign * 0.055 * Math.sin(prog * Math.PI * 4) * decay;
           }
         }
 
@@ -379,14 +362,21 @@
         bufferCtx.drawImage(hiddenVideo, -w / 2, -h / 2, w, h);
         bufferCtx.restore();
 
+        // 캡컷 렌즈 왜곡 및 슬라이스 글리치 효과
         if (isDistortionOn && isShakeOn) {
           const beatSec = 60 / baseBpm;
           const prog = (t % beatSec) / beatSec;
-          const decay = Math.exp(-5 * prog);
-          if (decay > 0.3) {
+          const decay = Math.exp(-4.8 * prog);
+          if (decay > 0.25) {
             ctx.save();
-            ctx.globalAlpha = 0.25;
-            ctx.drawImage(bufferCanvas, (Math.random() - 0.5) * 12, (Math.random() - 0.5) * 8);
+            ctx.globalAlpha = 0.35;
+            const sliceH = Math.floor(h / 12);
+            for (let i = 0; i < h; i += sliceH) {
+              if (Math.random() > 0.6) {
+                const offsetX = (Math.random() - 0.5) * 30 * decay;
+                ctx.drawImage(bufferCanvas, 0, i, w, sliceH, offsetX, i, w, sliceH);
+              }
+            }
             ctx.restore();
           }
         }
@@ -454,7 +444,7 @@
           exportProgressOverlay.classList.add('hidden');
           exportCompleteCard.classList.remove('hidden');
           hiddenVideo.play();
-          showToast('✅ 왜곡 쉐이크 영상 출력 완료!');
+          showToast('✅ 캡컷 왜곡 쉐이크 영상 출력 완료!');
         };
 
         activeRecorder.start();
