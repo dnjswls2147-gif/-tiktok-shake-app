@@ -84,7 +84,7 @@
         </div>
         <h2 id="homeTitleText" class="text-xl font-black text-white mb-2 fade-text">틱톡 쉐이크 프로 에디터</h2>
         <p id="homeDescText" class="text-xs text-slate-400 font-medium mb-6 leading-relaxed fade-text">
-          진동 30~360 조절 가능한 쉐이크와 전체화면,<br>그리고 캡컷 스타일 저장 기능을 즐겨보세요!
+          진동 30~360 조절 가능한 쉐이크와 전체화면,<br>그리고 자동 갤러리 저장 기능을 즐겨보세요!
         </p>
         <button id="btnGoUpload" type="button" class="btn-press w-full py-4 px-6 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-black text-xl rounded-2xl shadow-lg shadow-sky-600/30 flex items-center justify-center gap-2">
           <span>편집 시작하기</span>
@@ -147,7 +147,7 @@
           </div>
         </button>
 
-        <!-- 렌더링 오버레이 (캡컷 스타일 출력 및 취소 기능) -->
+        <!-- 렌더링 오버레이 (100% 도달 시 자동 저장 및 안내) -->
         <div id="exportProgressOverlay" class="hidden absolute inset-0 bg-slate-950/90 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center text-white z-20 space-y-3">
           <div id="spinnerIcon" class="w-10 h-10 border-4 border-sky-400 border-t-transparent rounded-full animate-spin"></div>
           <p id="exportStatusTitle" class="font-black text-sm">쉐이크 영상 렌더링 중...</p>
@@ -160,12 +160,6 @@
           <button id="btnCancelExport" type="button" class="btn-press py-2 px-5 bg-rose-600 text-white font-black text-xs rounded-xl shadow mt-2">
             취소
           </button>
-
-          <!-- 캡컷 스타일 영상 저장하기 버튼 (100% 완료 시 등장) -->
-          <a id="capcutSaveBtn" href="#" download="tiktok_shake_video.mp4" class="hidden btn-press w-full max-w-[220px] py-3 px-5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-sm rounded-2xl shadow-lg shadow-emerald-500/40 flex items-center justify-center gap-2 mt-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-            <span>영상 저장하기</span>
-          </a>
         </div>
       </div>
 
@@ -296,7 +290,6 @@
     const exportPercentText = document.getElementById('exportPercentText');
     const progressBarWrapper = document.getElementById('progressBarWrapper');
     const btnCancelExport = document.getElementById('btnCancelExport');
-    const capcutSaveBtn = document.getElementById('capcutSaveBtn');
     const toastBox = document.getElementById('toastBox');
 
     let currentShakeIntensity = 360;
@@ -393,7 +386,7 @@
         switchStep(stepEditor);
         hiddenVideo.play().then(() => { hiddenVideo.muted = false; }).catch(() => {});
         startLoop();
-        showToast('준비 완료! 진동 조절 및 캡컷 저장 준비됨.');
+        showToast('준비 완료! 자동 저장 기능 적용됨.');
       };
     }
 
@@ -484,7 +477,6 @@
       exportProgressOverlay.classList.add('hidden');
       spinnerIcon.classList.remove('hidden');
       progressBarWrapper.classList.remove('hidden');
-      capcutSaveBtn.classList.add('hidden');
       btnCancelExport.classList.remove('hidden');
 
       hiddenVideo.play();
@@ -505,7 +497,6 @@
       spinnerIcon.classList.remove('hidden');
       exportStatusTitle.textContent = "쉐이크 영상 렌더링 중...";
       progressBarWrapper.classList.remove('hidden');
-      capcutSaveBtn.classList.add('hidden');
       btnCancelExport.classList.remove('hidden');
 
       const dur = hiddenVideo.duration;
@@ -542,13 +533,29 @@
           spinnerIcon.classList.add('hidden');
           progressBarWrapper.classList.add('hidden');
           btnCancelExport.classList.add('hidden');
-          exportStatusTitle.textContent = "✅ 쉐이크 자막 영상 완성!";
-          
-          capcutSaveBtn.href = exportedObjectUrl;
-          capcutSaveBtn.classList.remove('hidden');
+          exportStatusTitle.textContent = "🎉 영상이 갤러리에 저장되었습니다!";
+
+          // 🌟 100% 도달 시 자동 다운로드 실행
+          const autoLink = document.createElement('a');
+          autoLink.href = exportedObjectUrl;
+          autoLink.download = 'tiktok_shake_video.mp4';
+          document.body.appendChild(autoLink);
+          autoLink.click();
+          document.body.removeChild(autoLink);
+
+          showToast('✅ 영상이 갤러리에 저장되었습니다!');
+
+          setTimeout(() => {
+            exportProgressOverlay.classList.add('hidden');
+            controlPanel.classList.remove('disabled-control');
+            btnFinalExport.classList.remove('disabled-control');
+            changeVideoLabel.classList.remove('disabled-control');
+            liveTimeBadge.classList.remove('hidden');
+            hiddenVideo.play();
+            startLoop();
+          }, 1500);
 
           isExporting = false;
-          showToast('✅ 쉐이크 영상 렌더링 완료!');
         };
 
         activeRecorder.start();
@@ -563,19 +570,6 @@
         exportProgressOverlay.classList.add('hidden');
         showToast('출력 중 오류 발생');
       }
-    });
-
-    capcutSaveBtn.addEventListener('click', () => {
-      showToast('📥 영상 저장(다운로드)을 시작합니다!');
-      setTimeout(() => {
-        exportProgressOverlay.classList.add('hidden');
-        controlPanel.classList.remove('disabled-control');
-        btnFinalExport.classList.remove('disabled-control');
-        changeVideoLabel.classList.remove('disabled-control');
-        liveTimeBadge.classList.remove('hidden');
-        hiddenVideo.play();
-        startLoop();
-      }, 1000);
     });
   </script>
 </body>
