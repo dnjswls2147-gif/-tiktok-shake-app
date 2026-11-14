@@ -63,7 +63,7 @@
       🎬 틱톡 쉐이크 프로 에디터
     </h1>
     <p id="headerSubText" class="text-xs font-bold text-sky-400 mt-1 fade-text">
-      진동 120 · 화면 3.6배 · 50 BPM부터 지원
+      진동 360 · 전체화면 보기 · 50 BPM부터 지원
     </p>
   </header>
 
@@ -80,7 +80,7 @@
         </div>
         <h2 id="homeTitleText" class="text-xl font-black text-white mb-2 fade-text">틱톡 쉐이크 프로 에디터</h2>
         <p id="homeDescText" class="text-xs text-slate-400 font-medium mb-6 leading-relaxed fade-text">
-          진동 120과 3.6배 광폭 줌인 쉐이크,<br>그리고 자막 위아래 조절 기능을 즐겨보세요!
+          진동 360 강렬한 쉐이크와 전체화면 보기,<br>그리고 자막 위아래 조절 기능을 즐겨보세요!
         </p>
         <button id="btnGoUpload" type="button" class="btn-press w-full py-4 px-6 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-black text-xl rounded-2xl shadow-lg shadow-sky-600/30 flex items-center justify-center gap-2">
           <span>편집 시작하기</span>
@@ -148,7 +148,7 @@
           <div class="w-10 h-10 border-4 border-sky-400 border-t-transparent rounded-full animate-spin"></div>
           <p class="font-black text-sm">쉐이크 영상 렌더링 중...</p>
           <p id="exportPercentText" class="text-xs text-sky-300 font-extrabold">0% 완료</p>
-          <div class="w-full max-w-[200px] bg-slate-800 rounded-full h-2 overflow-hidden">
+          <div class="w-full max-w-[200px] bg-slate-700 rounded-full h-2 overflow-hidden">
             <div id="exportProgressFill" class="bg-sky-400 h-full w-0"></div>
           </div>
           <button id="btnCancelExport" type="button" class="btn-press py-2 px-5 bg-rose-600 text-white font-black text-xs rounded-xl shadow mt-2">
@@ -160,10 +160,10 @@
       <!-- 효과 조절 컨트롤 패널 -->
       <div class="w-full bg-slate-900/95 backdrop-blur-md rounded-2xl p-3.5 shadow-xl border border-slate-800 space-y-3">
 
-        <!-- 1. 진동 120 & 3.6배 크기 쉐이크 토글 -->
+        <!-- 1. 진동 360 & 전체화면 쉐이크 토글 -->
         <div class="w-full">
           <button id="btnShakeToggle" type="button" class="btn-press w-full py-2.5 px-3 rounded-xl text-xs font-black bg-sky-600 text-white shadow-sm flex items-center justify-center gap-2">
-            <span>🔥 진동120 (3.6배 크기) 쉐이크:</span>
+            <span>🔥 진동360 (전체화면) 쉐이크:</span>
             <span id="shakeStateText" class="text-yellow-300">ON</span>
           </button>
         </div>
@@ -385,7 +385,7 @@
         switchStep(stepEditor);
         hiddenVideo.play().then(() => { hiddenVideo.muted = false; }).catch(() => {});
         startLoop();
-        showToast('준비 완료! 진동 120 및 3.6배 쉐이크 적용됨.');
+        showToast('준비 완료! 전체화면 및 진동 360 쉐이크 적용됨.');
       };
     }
 
@@ -412,7 +412,7 @@
           timeTextDisplay.textContent = `${t.toFixed(1)}초`;
         }
 
-        let scale = 3.6; // 3.6배 크기
+        let scale = 1.0; // 전체화면 (확대 없음)
         let dx = 0, dy = 0;
 
         if (isShakeOn) {
@@ -421,9 +421,9 @@
           const decay = Math.exp(-4.2 * prog);
           const sign = Math.floor(t / beatSec) % 2 === 0 ? 1 : -1;
           
-          scale = 3.6 + 0.85 * decay; 
-          dx = sign * 120 * Math.sin(prog * Math.PI * 6) * decay; // 진동 120
-          dy = 95 * Math.cos(prog * Math.PI * 5) * decay;
+          scale = 1.0 + 0.15 * decay; 
+          dx = sign * 360 * Math.sin(prog * Math.PI * 6) * decay; // 진동 360
+          dy = 280 * Math.cos(prog * Math.PI * 5) * decay;
         }
 
         bufferCtx.save();
