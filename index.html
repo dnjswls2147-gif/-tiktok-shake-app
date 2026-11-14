@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>틱톡 쉐이크 & 자막 프로 에디터</title>
+  <title>틱톡 쉐이크 & 헤드밥 프로 에디터</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;800;900&display=swap" rel="stylesheet">
   <style>
@@ -64,10 +64,10 @@
   <!-- 상단 헤더 -->
   <header class="w-full max-w-md pt-6 pb-2 px-5 text-center select-none">
     <h1 id="topTitle" class="text-2xl font-black tracking-tight text-white drop-shadow-md cursor-pointer">
-      🎬 틱톡 쉐이크 프로 에디터
+      🎬 틱톡 쉐이크 & 헤드밥 프로
     </h1>
     <p id="headerSubText" class="text-xs font-bold text-sky-400 mt-1 fade-text">
-      영상·사진 자유 선택 · 갤러리 즉시 저장 · 헤드밥 템플릿
+      음악 포함 저장 · 0.5초 납작/통통 헤드밥 · 즉시 저장
     </p>
   </header>
 
@@ -82,9 +82,9 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
         </div>
-        <h2 id="homeTitleText" class="text-xl font-black text-white mb-2 fade-text">틱톡 쉐이크 프로 에디터</h2>
+        <h2 id="homeTitleText" class="text-xl font-black text-white mb-2 fade-text">틱톡 헤드밥 & 쉐이크 에디터</h2>
         <p id="homeDescText" class="text-xs text-slate-400 font-medium mb-6 leading-relaxed fade-text">
-          영상이나 사진을 자유롭게 골라 쉐이크를 넣고,<br>버튼 하나로 갤러리에 즉시 저장해 보세요!
+          헤드밥 사진을 고르면 0.5초마다 납작·통통 반복!<br>노래 소리까지 완벽하게 갤러리에 저장됩니다.
         </p>
         <button id="btnGoUpload" type="button" class="btn-press w-full py-4 px-6 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-black text-xl rounded-2xl shadow-lg shadow-sky-600/30 flex items-center justify-center gap-2">
           <span>편집 시작하기</span>
@@ -103,9 +103,9 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
           </svg>
         </div>
-        <h2 class="text-xl font-black text-white mb-2">갤러리에서 영상 또는 사진 선택</h2>
+        <h2 class="text-xl font-black text-white mb-2">갤러리에서 배경 미디어 선택</h2>
         <p class="text-xs text-slate-400 font-medium mb-6">
-          동영상이나 사진 중 원하시는 미디어를 골라주세요.
+          기본 배경으로 쓸 영상이나 사진을 골라주세요.
         </p>
         <label for="nativeVideoInput" class="btn-press relative overflow-hidden w-full py-4 px-6 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-black text-lg rounded-2xl shadow-lg shadow-sky-500/35 flex items-center justify-center gap-2.5 cursor-pointer">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -149,7 +149,7 @@
         <!-- 렌더링 오버레이 -->
         <div id="exportProgressOverlay" class="hidden absolute inset-0 bg-slate-950/90 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center text-white z-20 space-y-3">
           <div id="spinnerIcon" class="w-10 h-10 border-4 border-sky-400 border-t-transparent rounded-full animate-spin"></div>
-          <p id="exportStatusTitle" class="font-black text-sm">갤러리 저장용 파일 생성 중...</p>
+          <p id="exportStatusTitle" class="font-black text-sm">노래 포함 영상 저장 중...</p>
           <p id="exportPercentText" class="text-xs text-sky-300 font-extrabold">0% 완료</p>
           <div id="progressBarWrapper" class="w-full max-w-[200px] bg-slate-700 rounded-full h-2 overflow-hidden">
             <div id="exportProgressFill" class="bg-sky-400 h-full w-0"></div>
@@ -164,16 +164,16 @@
       <!-- 효과 조절 컨트롤 패널 -->
       <div id="controlPanel" class="w-full bg-slate-900/95 backdrop-blur-md rounded-2xl p-3.5 shadow-xl border border-slate-800 space-y-3">
 
-        <!-- 헤드밥 자동 적용 섹션 -->
+        <!-- 헤드밥 사진 선택 섹션 -->
         <div class="space-y-2 pt-1">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-black text-sky-400">🔥 틱톡 유행 헤드밥 & 사진 교체</span>
+            <span class="text-xs font-black text-purple-400">🔥 틱톡 헤드밥 사진 (0.5초 납작·통통 반복)</span>
           </div>
           <label for="headbobPhotoInput" class="btn-press relative overflow-hidden w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-black text-xs rounded-xl shadow-md flex items-center justify-center gap-2 cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <span class="pointer-events-none">헤드밥 사진 선택 (영상을 이 사진으로 교체)</span>
+            <span class="pointer-events-none">헤드밥 사진 고르기 (이 사진으로만 출력)</span>
             <input id="headbobPhotoInput" type="file" accept="image/*" style="opacity: 0; position: absolute; inset: 0; width: 100%; height: 100%; cursor: pointer;" />
           </label>
         </div>
@@ -239,12 +239,12 @@
 
       </div>
 
-      <!-- 🌟 카톡 · 갤러리 즉시 저장 버튼 -->
+      <!-- 노래 포함 갤러리 즉시 저장 버튼 -->
       <button id="btnDirectSave" type="button" class="btn-press w-full py-4 px-6 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-black text-lg rounded-2xl shadow-lg shadow-emerald-600/35 flex items-center justify-center gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
         </svg>
-        <span>📥 카톡 · 갤러리 즉시 저장하기</span>
+        <span>📥 노래 포함 갤러리 즉시 저장하기</span>
       </button>
 
     </section>
@@ -354,7 +354,7 @@
           img.onload = function() {
             headbobCharImg = img;
             isHeadbobActive = true;
-            showToast('✨ 헤드밥 사진이 적용되어 영상이 교체되었습니다!');
+            showToast('✨ 헤드밥 사진이 적용되었습니다! (0.5초 납작·통통 반복)');
           };
           img.onerror = function() {
             showToast('❌ 유효한 사진이 아닙니다.');
@@ -430,7 +430,7 @@
         };
         img.src = uploadedObjectUrl;
       } else {
-        hiddenVideo.muted = true;
+        hiddenVideo.muted = false;
         hiddenVideo.src = uploadedObjectUrl;
         hiddenVideo.load();
 
@@ -453,13 +453,13 @@
           switchStep(stepEditor);
           hiddenVideo.play().then(() => { hiddenVideo.muted = false; }).catch(() => {});
           startLoop();
-          showToast('영상 준비 완료!');
+          showToast('영상 및 음악 준비 완료!');
         };
       }
     }
 
     btnPlayPause.addEventListener('click', () => {
-      if (isImageMode) return;
+      if (isImageMode && !isHeadbobActive) return;
       if (hiddenVideo.paused) { hiddenVideo.play(); pausedBadge.classList.add('hidden'); }
       else { hiddenVideo.pause(); pausedBadge.classList.remove('hidden'); }
     });
@@ -471,26 +471,37 @@
         let t = 0;
         if (customT !== null) {
           t = customT;
-        } else if (isImageMode) {
+        } else if (isImageMode && !isHeadbobActive) {
           t = (performance.now() - imageStaticTime) / 1000;
           timeTextDisplay.textContent = `${t.toFixed(1)}초`;
-        } else if (hiddenVideo.readyState >= 2) {
+        } else if (!isImageMode && hiddenVideo.readyState >= 2) {
           t = hiddenVideo.currentTime;
           if (!isForExport) {
             timeTextDisplay.textContent = `${t.toFixed(1)}초`;
           }
+        } else if (isHeadbobActive) {
+          t = (performance.now() - imageStaticTime) / 1000;
+          timeTextDisplay.textContent = `${t.toFixed(1)}초`;
         }
 
-        let scale = 1.0;
+        let scaleX = 1.0;
+        let scaleY = 1.0;
         let dx = 0, dy = 0;
 
-        if (currentShakeIntensity > 0) {
+        if (isHeadbobActive && headbobCharImg) {
+          const cycle = (t % 0.5) / 0.5;
+          const squish = Math.sin(cycle * Math.PI * 2);
+          scaleX = 1.0 + squish * 0.22;
+          scaleY = 1.0 - squish * 0.22;
+        } else if (currentShakeIntensity > 0) {
           const beatSec = 60 / currentBpm;
           const prog = (t % beatSec) / beatSec;
           const decay = Math.exp(-4.2 * prog);
           const sign = Math.floor(t / beatSec) % 2 === 0 ? 1 : -1;
           
-          scale = 1.0 + (currentShakeIntensity / 2400) * decay;
+          let baseScale = 1.0 + (currentShakeIntensity / 2400) * decay;
+          scaleX = baseScale;
+          scaleY = baseScale;
           dx = sign * currentShakeIntensity * Math.sin(prog * Math.PI * 6) * decay;
           dy = (currentShakeIntensity * 0.78) * Math.cos(prog * Math.PI * 5) * decay;
         }
@@ -500,39 +511,16 @@
         bufferCtx.fillRect(0, 0, w, h);
         
         bufferCtx.translate(w / 2 + dx, h / 2 + dy);
-        bufferCtx.scale(scale, scale);
+        bufferCtx.scale(scaleX, scaleY);
         
-        if (isImageMode && staticImageObj) {
+        if (isHeadbobActive && headbobCharImg) {
+          bufferCtx.drawImage(headbobCharImg, -w * 0.35, -h * 0.35, w * 0.7, h * 0.7);
+        } else if (isImageMode && staticImageObj) {
           bufferCtx.drawImage(staticImageObj, -w / 2, -h / 2, w, h);
-        } else if (hiddenVideo.readyState >= 2) {
+        } else if (!isImageMode && hiddenVideo.readyState >= 2) {
           bufferCtx.drawImage(hiddenVideo, -w / 2, -h / 2, w, h);
         }
         bufferCtx.restore();
-
-        const activeImg = headbobCharImg || (isImageMode ? staticImageObj : null);
-        if (isHeadbobActive && activeImg) {
-          const beatSec = 60 / currentBpm;
-          const prog = (t % beatSec) / beatSec;
-          const bounce = Math.sin(prog * Math.PI * 2) * (currentShakeIntensity * 0.15);
-          const armSway = Math.cos(prog * Math.PI * 4) * 12;
-
-          bufferCtx.save();
-          bufferCtx.translate(w / 2, h * 0.55);
-
-          bufferCtx.drawImage(activeImg, -w * 0.25, -h * 0.2, w * 0.5, h * 0.4);
-
-          bufferCtx.save();
-          bufferCtx.translate(0, -h * 0.25 + bounce);
-          bufferCtx.drawImage(activeImg, -w * 0.2, -h * 0.2, w * 0.4, h * 0.4);
-          bufferCtx.restore();
-
-          bufferCtx.save();
-          bufferCtx.translate(-w * 0.3 + armSway, -h * 0.1);
-          bufferCtx.rotate(armSway * 0.02);
-          bufferCtx.restore();
-
-          bufferCtx.restore();
-        }
 
         ctx.drawImage(bufferCanvas, 0, 0, w, h);
 
@@ -557,13 +545,14 @@
           ctx.restore();
         }
       }
-      if (!isForExport) {
+      if (!isExporting) {
         rafId = requestAnimationFrame(() => drawFrame(false));
       }
     }
 
     function startLoop() {
       if (rafId) cancelAnimationFrame(rafId);
+      imageStaticTime = performance.now();
       drawFrame(false);
     }
 
@@ -573,7 +562,7 @@
       }
       if (exportTimer) clearInterval(exportTimer);
       isExporting = false;
-      if (!isImageMode) hiddenVideo.loop = true;
+      if (!isImageMode && !isHeadbobActive) hiddenVideo.loop = true;
       
       controlPanel.classList.remove('disabled-control');
       btnDirectSave.classList.remove('disabled-control');
@@ -585,7 +574,7 @@
       progressBarWrapper.classList.remove('hidden');
       btnCancelExport.classList.remove('hidden');
 
-      if (!isImageMode) hiddenVideo.play();
+      if (!isImageMode && !isHeadbobActive) hiddenVideo.play();
       showToast('저장이 취소되었습니다.');
     });
 
@@ -601,11 +590,11 @@
       exportProgressOverlay.classList.remove('hidden');
       
       spinnerIcon.classList.remove('hidden');
-      exportStatusTitle.textContent = "갤러리 저장용 파일 생성 중...";
+      exportStatusTitle.textContent = "노래 소리 포함 영상 생성 중...";
       progressBarWrapper.classList.remove('hidden');
       btnCancelExport.classList.remove('hidden');
 
-      if (isImageMode) {
+      if (isImageMode && !isHeadbobActive) {
         setTimeout(() => {
           const dataUrl = previewCanvas.toDataURL('image/png');
           const autoLink = document.createElement('a');
@@ -627,20 +616,39 @@
         return;
       }
 
-      const dur = hiddenVideo.duration || 3.0;
-      hiddenVideo.pause();
-      hiddenVideo.currentTime = 0;
-
-      await new Promise(r => { hiddenVideo.onseeked = () => { hiddenVideo.onseeked = null; r(); }; });
+      let dur = 5.0;
+      if (!isImageMode && hiddenVideo.duration) {
+        dur = hiddenVideo.duration;
+        hiddenVideo.pause();
+        hiddenVideo.currentTime = 0;
+        await new Promise(r => { hiddenVideo.onseeked = () => { hiddenVideo.onseeked = null; r(); }; });
+      } else {
+        imageStaticTime = performance.now();
+      }
 
       try {
-        const stream = previewCanvas.captureStream(30);
-        activeRecorder = new MediaRecorder(stream, { videoBitsPerSecond: 6000000 });
+        const canvasStream = previewCanvas.captureStream(30);
+        let combinedStream = canvasStream;
+
+        if (!isImageMode && hiddenVideo.captureStream) {
+          const videoStream = hiddenVideo.captureStream();
+          const audioTracks = videoStream.getAudioTracks();
+          if (audioTracks.length > 0) {
+            audioTracks.forEach(track => combinedStream.addTrack(track));
+          }
+        }
+
+        activeRecorder = new MediaRecorder(combinedStream, { mimeType: 'video/webm;codecs=vp9,opus', videoBitsPerSecond: 6000000 });
         const chunks = [];
         activeRecorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
 
         let startTime = performance.now();
-        const targetDurationSec = Math.min(dur, 6.0);
+        const targetDurationSec = isHeadbobActive ? 5.0 : Math.min(dur, 6.0);
+
+        if (!isImageMode) {
+          hiddenVideo.muted = false;
+          hiddenVideo.play().catch(() => {});
+        }
 
         exportTimer = setInterval(() => {
           const elapsed = (performance.now() - startTime) / 1000;
@@ -649,9 +657,12 @@
           if (fillEl) fillEl.style.width = `${pct}%`;
           exportPercentText.textContent = `${pct}% 완료`;
           
-          let curT = (elapsed / targetDurationSec) * dur;
-          hiddenVideo.currentTime = curT % dur;
-          drawFrame(true, hiddenVideo.currentTime);
+          if (!isImageMode && hiddenVideo.duration) {
+            let curT = (elapsed / targetDurationSec) * dur;
+            drawFrame(true, curT % dur);
+          } else {
+            drawFrame(true);
+          }
 
           if (elapsed >= targetDurationSec) {
             if (activeRecorder && activeRecorder.state === 'recording') {
@@ -674,16 +685,16 @@
           spinnerIcon.classList.add('hidden');
           progressBarWrapper.classList.add('hidden');
           btnCancelExport.classList.add('hidden');
-          exportStatusTitle.textContent = "🎉 카톡 · 갤러리에 저장되었습니다!";
+          exportStatusTitle.textContent = "🎉 노래 포함 갤러리에 저장되었습니다!";
 
           const autoLink = document.createElement('a');
           autoLink.href = exportedObjectUrl;
-          autoLink.download = 'tiktok_shake_video.mp4';
+          autoLink.download = 'tiktok_music_headbob.mp4';
           document.body.appendChild(autoLink);
           autoLink.click();
           document.body.removeChild(autoLink);
 
-          showToast('✅ 갤러리에 영상이 즉시 저장되었습니다!');
+          showToast('✅ 노래 소리가 포함되어 갤러리에 저장되었습니다!');
 
           setTimeout(() => {
             exportProgressOverlay.classList.add('hidden');
@@ -691,17 +702,20 @@
             btnDirectSave.classList.remove('disabled-control');
             changeVideoLabel.classList.remove('disabled-control');
             liveTimeBadge.classList.remove('hidden');
-            hiddenVideo.loop = true;
-            hiddenVideo.play();
+            if (!isImageMode) {
+              hiddenVideo.loop = true;
+              hiddenVideo.play();
+            }
             startLoop();
           }, 1500);
 
           isExporting = false;
         };
 
-        hiddenVideo.loop = false;
+        if (!isImageMode) {
+          hiddenVideo.loop = false;
+        }
         activeRecorder.start();
-        await hiddenVideo.play();
         
       } catch (err) {
         isExporting = false;
