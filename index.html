@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>틱톡 & 캡컷 스타일 영상 쉐이크 편집기</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      font-family: 'Noto Sans KR', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      box-sizing: border-box;
+    }
+    body {
+      background: linear-gradient(160deg, #7DD3FC 0%, #BAE6FD 55%, #E0F2FE 100%);
+      min-height: 100vh;
+      margin: 0;
+    }
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      height: 6px;
+      background: #E2E8F0;
+      border-radius: 999px;
+      outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #0284C7;
+      cursor: pointer;
+      border: 3px solid #FFFFFF;
+      box-shadow: 0 2px 6px rgba(2, 132, 199, 0.45);
+    }
+    .btn-press {
+      transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.15s ease;
+    }
+    .btn-press:active {
+      transform: scale(0.95);
+    }
+    @keyframes popIn {
+      0% { opacity: 0; transform: translateY(10px) scale(0.98); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .animate-pop {
+      animation: popIn 0.28s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="text-slate-800 flex flex-col items-center justify-between pb-10">
+
+  <!-- 상단 헤더 -->
+  <header class="w-full max-w-md pt-6 pb-2 px-5 text-center select-none">
+    <h1 id="topTitle" class="text-3xl font-black tracking-tight text-slate-900 drop-shadow-sm cursor-pointer">
+      편집하기
+    </h1>
+    <p class="text-xs font-bold text-sky-900/75 mt-1">
+      쫀득한 틱톡 쉐이크 · 캡컷 글리치 · 워터마크
+    </p>
+  </header>
+
+  <!-- 메인 작업 영역 -->
+  <main class="w-full max-w-md flex-1 flex flex-col items-center justify-center px-4">
+
+    <!-- 1단계: 홈 화면 -->
+    <section id="stepHome" class="w-full flex flex-col items-center justify-center my-auto py-8 animate-pop">
+      <div class="bg-white/80 backdrop-blur-md border-2 border-white rounded-3xl p-7 w-full flex flex-col items-center shadow-xl text-center">
+        <div class="w-20 h-20 rounded-3xl bg-gradient-to-tr from-sky-400 to-blue-600 text-white flex items-center justify-center shadow-lg shadow-sky-500/30 mb-5">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.3">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <h2 class="text-xl font-black text-slate-800 mb-2">틱톡 에딧 쉐이크 메이커</h2>
+        <p class="text-xs text-slate-600 font-medium mb-6 leading-relaxed">
+          내 갤러리 영상을 불러와서<br>쫀득한 쉐이크와 워터마크를 입혀보세요!
+        </p>
+        <button id="btnGoUpload" type="button" class="btn-press w-full py-4 px-6 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-black text-xl rounded-2xl shadow-lg shadow-sky-600/30 flex items-center justify-center gap-2">
+          <span>편집하기</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- 2단계: 영상 업로드 화면 -->
+    <section id="stepUpload" class="hidden w-full flex flex-col items-center justify-center my-auto py-8 animate-pop">
+      <div class="bg-white/90 backdrop-blur-md border-2 border-dashed border-sky-400 rounded-3xl p-7 w-full flex flex-col items-center shadow-xl text-center">
+        <div class="w-20 h-20 rounded-full bg-sky-100 text-sky-600 flex items-center justify-center mb-5">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+          </svg>
+        </div>
+        <h2 class="text-xl font-black text-slate-800 mb-2">갤러리에서 영상 선택</h2>
+        <p class="text-xs text-slate-500 font-medium mb-6">
+          아래 <strong class="text-sky-600">영상 올리기</strong> 버튼을 터치하세요.
+        </p>
+        <label for="nativeVideoInput" class="btn-press relative overflow-hidden w-full py-4 px-6 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-black text-lg rounded-2xl shadow-lg shadow-sky-500/35 flex items-center justify-center gap-2.5 cursor-pointer">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+          </svg>
+          <span class="pointer-events-none">영상 올리기</span>
+          <input id="nativeVideoInput" type="file" accept="video/*" style="opacity: 0; position: absolute; inset: 0; width: 100%; height: 100%; cursor: pointer;" />
+        </label>
+      </div>
+    </section>
+
+    <!-- 3단계: 에디터 화면 -->
+    <section id="stepEditor" class="hidden w-full flex flex-col items-center space-y-3 animate-pop">
+
+      <!-- 상단바 -->
+      <div class="w-full flex items-center justify-between bg-white/90 backdrop-blur-sm px-4 py-2 rounded-2xl shadow-sm">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-sky-500 animate-ping"></span>
+          <span class="text-xs font-black text-sky-700">실시간 에디터 작동중</span>
+        </div>
+        <label for="changeVideoInput" class="relative overflow-hidden text-xs font-extrabold text-sky-600 underline cursor-pointer py-1 px-2">
+          <span>다른 영상 올리기</span>
+          <input id="changeVideoInput" type="file" accept="video/*" style="opacity: 0; position: absolute; inset: 0; width: 100%; height: 100%; cursor: pointer;" />
+        </label>
+      </div>
+
+      <!-- 캔버스 컨테이너 (원본 비율 100% 유지) -->
+      <div id="canvasBox" class="relative w-full bg-slate-950 rounded-3xl overflow-hidden shadow-2xl border-4 border-white flex items-center justify-center mx-auto" style="min-height: 240px; max-height: 46vh;">
+        <canvas id="previewCanvas" class="block max-w-full max-h-[44vh] w-auto h-auto"></canvas>
+        <button id="btnPlayPause" type="button" class="absolute inset-0 w-full h-full flex items-center justify-center bg-transparent">
+          <div id="pausedBadge" class="hidden w-12 h-12 rounded-full bg-black/60 text-white flex items-center justify-center backdrop-blur-sm shadow">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </button>
+
+        <!-- 렌더링 오버레이 (취소 버튼 포함) -->
+        <div id="exportProgressOverlay" class="hidden absolute inset-0 bg-slate-900/90 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center text-white z-20 space-y-3">
+          <div class="w-10 h-10 border-4 border-sky-400 border-t-transparent rounded-full animate-spin"></div>
+          <p class="font-black text-sm">쉐이크 영상 렌더링 중...</p>
+          <p id="exportPercentText" class="text-xs text-sky-300 font-extrabold">0% 완료</p>
+          <div class="w-full max-w-[200px] bg-slate-700 rounded-full h-2 overflow-hidden">
+            <div id="exportProgressFill" class="bg-sky-400 h-full w-0"></div>
+          </div>
+          <button id="btnCancelExport" type="button" class="btn-press py-2 px-5 bg-rose-500 text-white font-black text-xs rounded-xl shadow mt-2">
+            출력 취소하기
+          </button>
+        </div>
+      </div>
+
+      <!-- 효과 조절 컨트롤 패널 -->
+      <div class="w-full bg-white/95 backdrop-blur-md rounded-2xl p-3.5 shadow-md border border-white space-y-3">
+
+        <!-- 1. 쫀득한 쉐이크 토글 -->
+        <div class="w-full">
+          <button id="btnShakeToggle" type="button" class="btn-press w-full py-2.5 px-3 rounded-xl text-xs font-black bg-sky-500 text-white shadow-sm flex items-center justify-center gap-2">
+            <span>🔥 2배 더 쫀득한 틱톡 에딧 쉐이크:</span>
+            <span id="shakeStateText" class="text-yellow-200">ON</span>
+          </button>
+        </div>
+
+        <hr class="border-slate-200">
+
+        <!-- 2. 워터마크 설정 패널 (중앙 고정, 3배 크기 틱톡 에딧 폰트) -->
+        <div class="space-y-2">
+          <span class="text-xs font-black text-slate-700">🏷️ 틱톡 에딧 워터마크 (정중앙 3배 크기)</span>
+          <input id="inputWmText" type="text" placeholder="예: @my_edit" value="@my_edit" class="w-full py-2 px-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 outline-none focus:border-sky-500">
+          
+          <div class="grid grid-cols-2 gap-2 text-[11px]">
+            <div class="flex items-center justify-between bg-slate-50 px-2.5 py-1.5 rounded-xl border border-slate-200">
+              <span class="font-bold text-slate-500">시작(초)</span>
+              <input id="inputWmStart" type="number" step="0.5" min="0" value="0" class="w-12 text-right font-black text-sky-600 bg-transparent outline-none">
+            </div>
+            <div class="flex items-center justify-between bg-slate-50 px-2.5 py-1.5 rounded-xl border border-slate-200">
+              <span class="font-bold text-slate-500">끝(초)</span>
+              <input id="inputWmEnd" type="number" step="0.5" min="0.5" value="99" class="w-12 text-right font-black text-sky-600 bg-transparent outline-none">
+            </div>
+          </div>
+        </div>
+
+        <hr class="border-slate-200">
+
+        <!-- 3. 배속 조절 -->
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs font-black text-slate-700">⏩ 영상 배속</span>
+            <span id="speedValueText" class="text-xs font-extrabold text-sky-600">1.0x 기본</span>
+          </div>
+          <div class="grid grid-cols-4 gap-1">
+            <button type="button" data-speed="0.5" class="speed-btn py-1.5 rounded-lg text-[10px] font-bold bg-slate-100 text-slate-700">0.5x 느리게</button>
+            <button type="button" data-speed="1.0" class="speed-btn py-1.5 rounded-lg text-[10px] font-extrabold bg-sky-500 text-white">1.0x 기본</button>
+            <button type="button" data-speed="1.5" class="speed-btn py-1.5 rounded-lg text-[10px] font-bold bg-slate-100 text-slate-700">1.5x 빠르게</button>
+            <button type="button" data-speed="2.0" class="speed-btn py-1.5 rounded-lg text-[10px] font-bold bg-slate-100 text-slate-700">2.0x 초고속</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 하단 출력 버튼 -->
+      <button id="btnFinalExport" type="button" class="btn-press w-full py-4 px-6 bg-emerald-500 hover:bg-emerald-600 text-white font-black text-lg rounded-2xl shadow-lg shadow-emerald-500/30 flex items-center justify-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+        </svg>
+        <span>출력하기 (갤러리 저장)</span>
+      </button>
+
+      <!-- 저장 완료 카드 (취소/초기화 버튼 포함) -->
+      <div id="exportCompleteCard" class="hidden w-full bg-white rounded-2xl p-4 shadow-lg border-2 border-emerald-400 text-center space-y-2.5 animate-pop">
+        <p class="text-sm font-black text-emerald-700">✅ 쉐이크 영상 완성!</p>
+        <a id="directDownloadBtn" href="#" download="tiktok_edit_shake.mp4" class="btn-press block w-full py-3 px-4 bg-emerald-500 text-white font-black text-sm rounded-xl shadow">
+          📥 갤러리 저장 (다운로드 및 공유)
+        </a>
+        <button id="btnCancelExportDone" type="button" class="btn-press w-full py-2.5 px-4 bg-slate-200 text-slate-700 font-bold text-xs rounded-xl">
+          취소 / 다시 편집하기
+        </button>
+      </div>
+
+    </section>
+  </main>
+
+  <div id="toastBox" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900/95 text-white text-xs font-bold px-5 py-3 rounded-full shadow-2xl opacity-0 pointer-events-none transition-opacity duration-200 z-50">
+    알림
+  </div>
+
+  <video id="hiddenVideo" muted playsinline loop preload="auto" crossorigin="anonymous" class="hidden"></video>
+
+  <script>
+    const topTitle = document.getElementById('topTitle');
+    const stepHome = document.getElementById('stepHome');
+    const stepUpload = document.getElementById('stepUpload');
+    const stepEditor = document.getElementById('stepEditor');
+    const btnGoUpload = document.getElementById('btnGoUpload');
+    const nativeVideoInput = document.getElementById('nativeVideoInput');
+    const changeVideoInput = document.getElementById('changeVideoInput');
+
+    const hiddenVideo = document.getElementById('hiddenVideo');
+    const canvasBox = document.getElementById('canvasBox');
+    const previewCanvas = document.getElementById('previewCanvas');
+    const ctx = previewCanvas.getContext('2d', { alpha: false });
+    const bufferCanvas = document.createElement('canvas');
+    const bufferCtx = bufferCanvas.getContext('2d', { alpha: false });
+
+    const btnPlayPause = document.getElementById('btnPlayPause');
+    const pausedBadge = document.getElementById('pausedBadge');
+
+    const btnShakeToggle = document.getElementById('btnShakeToggle');
+    const shakeStateText = document.getElementById('shakeStateText');
+
+    const inputWmText = document.getElementById('inputWmText');
+    const inputWmStart = document.getElementById('inputWmStart');
+    const inputWmEnd = document.getElementById('inputWmEnd');
+
+    const speedBtns = document.querySelectorAll('.speed-btn');
+    const speedValueText = document.getElementById('speedValueText');
+
+    const btnFinalExport = document.getElementById('btnFinalExport');
+    const exportProgressOverlay = document.getElementById('exportProgressOverlay');
+    const exportPercentText = document.getElementById('exportPercentText');
+    const exportProgressFill = document.getElementById('exportProgressFill');
+    const btnCancelExport = document.getElementById('btnCancelExport');
+    const exportCompleteCard = document.getElementById('exportCompleteCard');
+    const directDownloadBtn = document.getElementById('directDownloadBtn');
+    const btnCancelExportDone = document.getElementById('btnCancelExportDone');
+    const toastBox = document.getElementById('toastBox');
+
+    let isShakeOn = true;
+    let playbackSpeed = 1.0;
+    const baseBpm = 110; // 박자 주기를 넓혀서 쉐이크 지속 시간 연장
+    let rafId = null;
+    let isExporting = false;
+    let activeRecorder = null;
+    let exportTimer = null;
+    let uploadedObjectUrl = null;
+    let exportedObjectUrl = null;
+
+    function showToast(msg) {
+      toastBox.textContent = msg;
+      toastBox.classList.remove('opacity-0');
+      toastBox.classList.add('opacity-100');
+      setTimeout(() => {
+        toastBox.classList.remove('opacity-100');
+        toastBox.classList.add('opacity-0');
+      }, 2500);
+    }
+
+    function switchStep(target) {
+      [stepHome, stepUpload, stepEditor].forEach(el => el.classList.add('hidden'));
+      target.classList.remove('hidden');
+    }
+
+    topTitle.addEventListener('click', () => { if (!isExporting) switchStep(stepHome); });
+    btnGoUpload.addEventListener('click', () => switchStep(stepUpload));
+
+    [nativeVideoInput, changeVideoInput].forEach(inp => {
+      inp.addEventListener('change', (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (file) handleFile(file);
+      });
+    });
+
+    function handleFile(file) {
+      showToast('영상을 불러오는 중...');
+      if (uploadedObjectUrl) URL.revokeObjectURL(uploadedObjectUrl);
+      uploadedObjectUrl = URL.createObjectURL(file);
+      exportCompleteCard.classList.add('hidden');
+
+      hiddenVideo.muted = true;
+      hiddenVideo.src = uploadedObjectUrl;
+      hiddenVideo.load();
+
+      hiddenVideo.onloadedmetadata = () => {
+        const w = hiddenVideo.videoWidth || 720;
+        const h = hiddenVideo.videoHeight || 1280;
+        const maxS = 720;
+        let cw = w, ch = h;
+        if (cw > maxS || ch > maxS) {
+          const sc = Math.min(maxS/cw, maxS/ch);
+          cw = Math.round(cw * sc); ch = Math.round(ch * sc);
+        }
+        cw = cw % 2 === 0 ? cw : cw - 1;
+        ch = ch % 2 === 0 ? ch : ch - 1;
+
+        previewCanvas.width = cw; previewCanvas.height = ch;
+        bufferCanvas.width = cw; bufferCanvas.height = ch;
+        canvasBox.style.aspectRatio = `${cw} / ${ch}`;
+
+        switchStep(stepEditor);
+        hiddenVideo.play().then(() => { hiddenVideo.muted = false; }).catch(() => {});
+        startLoop();
+        showToast('준비 완료! 2배 더 쫀득한 쉐이크를 확인하세요.');
+      };
+    }
+
+    btnShakeToggle.addEventListener('click', () => {
+      isShakeOn = !isShakeOn;
+      shakeStateText.textContent = isShakeOn ? 'ON' : 'OFF';
+      btnShakeToggle.className = isShakeOn ? 
+        'btn-press w-full py-2.5 px-3 rounded-xl text-xs font-black bg-sky-500 text-white shadow-sm flex items-center justify-center gap-2' :
+        'btn-press w-full py-2.5 px-3 rounded-xl text-xs font-black bg-slate-100 text-slate-700 border border-slate-200 flex items-center justify-center gap-2';
+    });
+
+    speedBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        speedBtns.forEach(b => b.className = 'speed-btn py-1.5 rounded-lg text-[10px] font-bold bg-slate-100 text-slate-700');
+        btn.className = 'speed-btn py-1.5 rounded-lg text-[10px] font-extrabold bg-sky-500 text-white';
+        playbackSpeed = parseFloat(btn.dataset.speed);
+        hiddenVideo.playbackRate = playbackSpeed;
+        speedValueText.textContent = `${playbackSpeed.toFixed(1)}x 배속`;
+      });
+    });
+
+    btnPlayPause.addEventListener('click', () => {
+      if (hiddenVideo.paused) { hiddenVideo.play(); pausedBadge.classList.add('hidden'); }
+      else { hiddenVideo.pause(); pausedBadge.classList.remove('hidden'); }
+    });
+
+    function drawFrame() {
+      const w = previewCanvas.width;
+      const h = previewCanvas.height;
+      if (hiddenVideo.readyState >= 2 && w > 0 && h > 0) {
+        const t = hiddenVideo.currentTime;
+        let scale = 1.0, dx = 0, dy = 0;
+
+        if (isShakeOn) {
+          const beatSec = 60 / baseBpm;
+          const prog = (t % beatSec) / beatSec;
+          const decay = Math.exp(-4.5 * prog); // 더 길어진 쉐이크 지속 시간
+          const sign = Math.floor(t / beatSec) % 2 === 0 ? 1 : -1;
+          scale = 1.25 + 0.44 * decay; // 2배 더 쫀득하고 강한 줌인 바운스
+          dx = sign * 75 * Math.sin(prog * Math.PI * 4) * decay;
+          dy = 55 * Math.cos(prog * Math.PI * 3) * decay;
+        }
+
+        bufferCtx.save();
+        bufferCtx.fillStyle = '#000';
+        bufferCtx.fillRect(0, 0, w, h);
+        bufferCtx.translate(w / 2 + dx, h / 2 + dy);
+        bufferCtx.scale(scale, scale);
+        bufferCtx.drawImage(hiddenVideo, -w / 2, -h / 2, w, h);
+        bufferCtx.restore();
+
+        ctx.drawImage(bufferCanvas, 0, 0, w, h);
+
+        // 틱톡 에딧 스타일 정중앙 고정 3배 크기 워터마크
+        const wmText = inputWmText.value.trim();
+        const startT = parseFloat(inputWmStart.value) || 0;
+        const endT = parseFloat(inputWmEnd.value) || 999;
+        if (wmText && t >= startT && t <= endT) {
+          ctx.save();
+          const fontSize = Math.round(Math.min(w, h) * 0.085 * 3); // 3배 더 커진 폰트
+          ctx.font = `900 ${fontSize}px "Impact", "Arial Black", sans-serif`;
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.98)';
+          ctx.shadowColor = 'rgba(0, 0, 0, 0.95)';
+          ctx.shadowBlur = 12;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(wmText, w / 2, h / 2);
+          ctx.restore();
+        }
+      }
+      rafId = requestAnimationFrame(drawFrame);
+    }
+
+    function startLoop() {
+      if (rafId) cancelAnimationFrame(rafId);
+      drawFrame();
+    }
+
+    btnCancelExport.addEventListener('click', () => {
+      if (activeRecorder && activeRecorder.state === 'recording') {
+        activeRecorder.stop();
+      }
+      if (exportTimer) clearInterval(exportTimer);
+      isExporting = false;
+      exportProgressOverlay.classList.add('hidden');
+      hiddenVideo.play();
+      showToast('출력이 취소되었습니다.');
+    });
+
+    btnCancelExportDone.addEventListener('click', () => {
+      exportCompleteCard.classList.add('hidden');
+      hiddenVideo.play();
+    });
+
+    btnFinalExport.addEventListener('click', async () => {
+      if (isExporting) return;
+      isExporting = true;
+      exportCompleteCard.classList.add('hidden');
+      exportProgressOverlay.classList.remove('hidden');
+
+      const dur = hiddenVideo.duration;
+      hiddenVideo.pause();
+      hiddenVideo.currentTime = 0;
+      hiddenVideo.playbackRate = playbackSpeed;
+
+      await new Promise(r => { hiddenVideo.onseeked = () => { hiddenVideo.onseeked = null; r(); }; });
+
+      try {
+        const stream = previewCanvas.captureStream(30);
+        activeRecorder = new MediaRecorder(stream, { videoBitsPerSecond: 6000000 });
+        const chunks = [];
+        activeRecorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+
+        exportTimer = setInterval(() => {
+          const pct = Math.min(99, Math.round((hiddenVideo.currentTime / dur) * 100));
+          exportProgressFill.style.width = `${pct}%`;
+          exportPercentText.textContent = `${pct}% 완료`;
+        }, 100);
+
+        activeRecorder.onstop = () => {
+          clearInterval(exportTimer);
+          if (!isExporting) return; // 취소된 경우
+          const blob = new Blob(chunks, { type: 'video/webm' });
+          if (exportedObjectUrl) URL.revokeObjectURL(exportedObjectUrl);
+          exportedObjectUrl = URL.createObjectURL(blob);
+
+          directDownloadBtn.href = exportedObjectUrl;
+          isExporting = false;
+          exportProgressOverlay.classList.add('hidden');
+          exportCompleteCard.classList.remove('hidden');
+          hiddenVideo.play();
+          showToast('✅ 쉐이크 영상 출력 완료!');
+        };
+
+        activeRecorder.start();
+        await hiddenVideo.play();
+        hiddenVideo.onended = () => { hiddenVideo.onended = null; if(activeRecorder && activeRecorder.state === 'recording') activeRecorder.stop(); };
+      } catch (err) {
+        isExporting = false;
+        exportProgressOverlay.classList.add('hidden');
+        showToast('출력 중 오류 발생');
+      }
+    });
+  </script>
+</body>
+  </html>
